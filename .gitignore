@@ -17,3 +17,4 @@
 /.env
 /.env.test
 /phpunit.xml.dist
+/.idea
