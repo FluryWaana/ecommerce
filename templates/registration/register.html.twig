@@ -1,15 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Création de compte{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <!-- Début du block d'inscription -->
+    <div class="card w-50 mx-auto">
+        <h1 class="card-header">Création de compte</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        <div class="card-body">
+            <!-- Début du formulaire d'inscription -->
+            {{ form_start(registrationForm) }}
+            <h2>Vos identifiants</h2>
+            {{ form_row(registrationForm.user_email) }}
+            {{ form_row(registrationForm.user_password.first) }}
+            {{ form_row(registrationForm.user_password.second) }}
+            <hr />
+            <h2>Vos informations personnelles</h2>
+            {{ form_row(registrationForm.user_sexe) }}
+            {{ form_row(registrationForm.user_nom) }}
+            {{ form_row(registrationForm.user_prenom) }}
+            {{ form_row(registrationForm.user_date_naissance) }}
+            <div class="form-group text-center">
+                <button class="btn btn-primary">Valider</button>
+            </div>
+            {{ form_end(registrationForm) }}
+            <!-- Fin du formulaire d'inscription -->
+        </div>
+    </div>
+    <!-- Fin du block d'inscription -->
 
-        <button class="btn">Register</button>
-    {{ form_end(registrationForm) }}
 {% endblock %}

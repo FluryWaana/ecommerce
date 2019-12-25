@@ -2,18 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\ArticleCategorie;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends Controller
+class UserController extends Controller
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/compte", name="user_account")
      */
     public function index()
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+        return $this->render('user/index.html.twig', [
+            'controller_name' => 'UserController',
             'categories'      => $this->getCategories()
         ]);
     }

@@ -37,22 +37,45 @@
                         <!-- Fin du titre du site -->
 
                         <!-- Début de Mon Compte -->
-                        <div class="col-2 col-sm-3 col-md-2 col-lg-1 order-3 order-lg-2 my-auto item-user">
-                            <a>
+                        <div class="col-2 col-sm-3 col-md-2 col-lg-1 order-3 order-lg-2 my-auto">
+                            <a href="#" class="item-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user fa-lg"></i>
+                                <span>Compte</span>
                             </a>
-                            <span class="text-white text-center nav-m-right">Compte</span>
+                            <div class="dropdown-menu">
+                                <!-- Début utilisateur non connecté -->
+                                {% if not app.user %}
+                                <a class="dropdown-item" href="{{ path('app_login') }}">
+                                    <i class="fas fa-sign-in-alt"></i> Connexion
+                                </a>
+                                <a class="dropdown-item" href="{{ path('app_register') }}">
+                                    <i class="fas fa-user-plus"></i> Créer un compte
+                                </a>
+                                {% endif %}
+                                <!-- Fin utilisateur non connecté -->
+
+                                <!-- Début utilisateur connecté -->
+                                {% if app.user %}
+                                    <span class="username">Bonjour {{ app.user.UserPrenom | capitalize }}</span>
+                                    <div class="dropdown-divider mt-0"></div>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <a class="dropdown-item" href="{{ path('user_account') }}">Administration</a>
+                                    {% endif %}
+                                    <a class="dropdown-item" href="{{ path('user_account') }}">Votre compte</a>
+                                    <a class="dropdown-item" href="{{ path('user_order') }}">Vos commandes</a>
+                                    <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+                                {% endif %}
+                                <!-- Fin utilisateur connecté -->
+                            </div>
                         </div>
                         <!-- Fin de mon compte -->
 
                         <!-- Début panier -->
-                        <div class="col-3 col-sm-3 col-md-2 col-lg-1 order-4 order-lg-3 my-auto item-cart">
-                            <a>
-                                <i class="fas fa-shopping-cart fa-lg"></i>
-                                <span class="badge badge-success">0</span>
-                            </a>
-                            <span class="text-white text-center nav-m-right">Panier</span>
-                        </div>
+                        <a class="col-3 col-sm-3 col-md-2 col-lg-1 order-4 order-lg-3 my-auto item-cart" href="{{ path('panier') }}">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            <span class="badge badge-success">0</span>
+                            <span>Panier</span>
+                        </a>
                         <!-- Fin du panier -->
 
                         <!-- Début du formulaire de recherche -->
@@ -81,7 +104,7 @@
                                             Aucune catégorie de disponible
                                         {% endif %}
                                         {% for categorie in categories %}
-                                            <a class="dropdown-item" href="{{ path('categorie', { 'id': categorie.id }) }}">{{ categorie.ProduitCategorieNom | capitalize }}</a>
+                                            <a class="dropdown-item" href="{{ path('categorie', { 'id': categorie.id }) }}">{{ categorie.ArticleCategorieNom | capitalize }}</a>
                                         {% endfor %}
                                     </div>
                                 </li>
@@ -97,7 +120,7 @@
 
         <!-- Début du contenu principal -->
         <main class="container">
-            <div class="main-content">
+            <div class="main-content pt-5">
                 {% block body %}
                 {% endblock %}
             </div>
@@ -105,12 +128,12 @@
         <!-- Fin du contenu principal -->
 
         <!-- Début du footer -->
-        <footer class="container-fluid bg-navbar p-0 footer">
+        <footer class="container-fluid bg-navbar p-0">
             <div class="container p-0">
                 <nav>
                     <ul class="nav">
                         <li><a href="{{ path('home') }}">Accueil</a></li>
-                        <li><a href="{{ path('home') }}">Tous nos produits</a></li>
+                        <li><a href="{{ path('home') }}">Tous nos articles</a></li>
                     </ul>
                 </nav>
             </div>

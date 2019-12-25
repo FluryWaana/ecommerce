@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\ProduitCategorie;
+use App\Entity\ArticleCategorie;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ProduitCategorieFixture extends Fixture
+class ArticleCategorieFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
@@ -16,8 +16,8 @@ class ProduitCategorieFixture extends Fixture
         // Parcours le tableau pour remplir la BDD de catégorie
         for( $i = 0; $i < count( $categories ); $i++ )
         {
-            $categorie = new ProduitCategorie();
-            $categorie->setProduitCategorieNom( $categories[$i]);
+            $categorie = new ArticleCategorie();
+            $categorie->setArticleCategorieNom( $categories[$i]);
             $manager->persist( $categorie );
         }
 

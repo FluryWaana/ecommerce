@@ -5,16 +5,16 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-use App\Entity\ProduitCategorie;
+use App\Entity\ArticleCategorie;
 
 class Controller extends AbstractController
 {
     /**
      * Retourne toutes les catégories d'articles
-     * @return ProduitCategorie[]
+     * @return ArticleCategorie[]
      */
     protected function getCategories() : Array
     {
-        return $this->getDoctrine()->getRepository( ProduitCategorie::class )->findAll();
+        return $this->getDoctrine()->getRepository( ArticleCategorie::class )->findAll();
     }
 }

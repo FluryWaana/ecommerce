@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"user_email"}, message="Un compte existe déjà avec cette adresse email")
  */
 class User implements UserInterface
 {
@@ -17,12 +17,12 @@ class User implements UserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private $user_id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email;
+    private $user_email;
 
     /**
      * @ORM\Column(type="json")
@@ -33,21 +33,56 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    private $user_password;
+
+    /**
+     * @var string La confirmation du mot de passe
+     */
+    private $confirm_password;
+
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    private $user_nom;
+
+    /**
+     * @ORM\Column(type="string", length=60)
+     */
+    private $user_prenom;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $user_date_naissance;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $user_created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $user_updated_at;
+
+    /**
+     * @ORM\Column(type="string", length=1)
+     */
+    private $user_sexe;
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->user_id;
     }
 
-    public function getEmail(): ?string
+    public function getUserEmail(): ?string
     {
-        return $this->email;
+        return $this->user_email;
     }
 
-    public function setEmail(string $email): self
+    public function setUserEmail(string $user_email): self
     {
-        $this->email = $email;
+        $this->user_email = $user_email;
 
         return $this;
     }
@@ -59,7 +94,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->user_email;
     }
 
     /**
@@ -86,12 +121,17 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string) $this->user_password;
     }
 
-    public function setPassword(string $password): self
+    public function getUserPassword(): string
     {
-        $this->password = $password;
+        return (string) $this->user_password;
+    }
+
+    public function setUserPassword(string $password): self
+    {
+        $this->user_password = $password;
 
         return $this;
     }
@@ -112,4 +152,90 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function getUserNom(): ?string
+    {
+        return $this->user_nom;
+    }
+
+    public function setUserNom(string $user_nom): self
+    {
+        $this->user_nom = $user_nom;
+
+        return $this;
+    }
+
+    public function getUserPrenom(): ?string
+    {
+        return $this->user_prenom;
+    }
+
+    public function setUserPrenom(string $user_prenom): self
+    {
+        $this->user_prenom = $user_prenom;
+
+        return $this;
+    }
+
+    public function getUserDateNaissance(): ?\DateTimeInterface
+    {
+        return $this->user_date_naissance;
+    }
+
+    public function setUserDateNaissance(?\DateTimeInterface $user_date_naissance): self
+    {
+        $this->user_date_naissance = $user_date_naissance;
+
+        return $this;
+    }
+
+    public function getUserCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->user_created_at;
+    }
+
+    public function setUserCreatedAt(\DateTimeInterface $user_created_at): self
+    {
+        $this->user_created_at = $user_created_at;
+
+        return $this;
+    }
+
+    public function getUserUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->user_updated_at;
+    }
+
+    public function setUserUpdatedAt(?\DateTimeInterface $user_updated_at): self
+    {
+        $this->user_updated_at = $user_updated_at;
+
+        return $this;
+    }
+
+    public function getConfirmPassword(): string
+    {
+        return $this->confirm_password;
+    }
+
+    public function setConfirmPassword(string $confirm_password): self
+    {
+        $this->confirm_password = $confirm_password;
+
+        return $this;
+    }
+
+    public function getUserSexe(): ?string
+    {
+        return $this->user_sexe;
+    }
+
+    public function setUserSexe(string $user_sexe): self
+    {
+        $this->user_sexe = $user_sexe;
+
+        return $this;
+    }
+
+
 }

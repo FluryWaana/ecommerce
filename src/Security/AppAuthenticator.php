@@ -46,13 +46,13 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'email' => $request->request->get('email'),
-            'password' => $request->request->get('password'),
-            'csrf_token' => $request->request->get('_csrf_token'),
+            'user_email'    => $request->request->get('email'),
+            'user_password' => $request->request->get('password'),
+            'csrf_token'    => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['email']
+            $credentials['user_email']
         );
 
         return $credentials;
@@ -65,11 +65,10 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['user_email' => $credentials['user_email']]);
 
         if (!$user) {
-            // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Identifiants incorrects, veuillez vérifier votre email et mot de passe.');
         }
 
         return $user;
@@ -77,7 +76,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['user_password']);
     }
 
     /**
@@ -85,7 +84,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
      */
     public function getPassword($credentials): ?string
     {
-        return $credentials['password'];
+        return $credentials['user_password'];
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -94,8 +93,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        return new RedirectResponse($this->urlGenerator->generate('user_account'));
     }
 
     protected function getLoginUrl()

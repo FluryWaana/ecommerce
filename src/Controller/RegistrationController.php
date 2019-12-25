@@ -5,14 +5,15 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthenticator;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use DateTime;
 
-class RegistrationController extends AbstractController
+class RegistrationController extends Controller
 {
     /**
      * @Route("/register", name="app_register")
@@ -25,29 +26,32 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-            $user->setPassword(
+            $user->setUserPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('user_password')->getData()
                 )
             );
+
+            $user->setUserCreatedAt( new DateTime('now' ) );
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
+            // TODO envoie d'email lors de l'inscription
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
                 $authenticator,
-                'main' // firewall name in security.yaml
-            );
+                'main'
+            ) ?: new RedirectResponse($this->urlGenerator->generate('user_account'));
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'categories'       => $this->getCategories()
         ]);
     }
 }
