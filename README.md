@@ -35,4 +35,4 @@ php bin/console doctrine:fixtures:load
 symfony serve
 ~~~
 
-Le serveur est disponible par défaut à l'adresse suivante: http://127.0.0.1:8000
+Le serveur est disponible par défaut à l'adresse suivante: http://127.0.0.1:8000 ou https://127.0.0.1:8000 si le CA est installé
