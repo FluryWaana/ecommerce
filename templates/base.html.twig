@@ -1,12 +1,129 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <!-- Début Méta Obligatoire -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- Fin Méta Obligatoire -->
+
         <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <!-- Début Style -->
+        <link rel="stylesheet" href="{{ asset( 'css/bootstrap.min.css' ) }}" />
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
         {% block stylesheets %}{% endblock %}
+        <!-- Fin Style -->
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="container-fluid bg-navbar">
+            <div class="container p-0">
+
+                <!-- Début de la navigation principale -->
+                <nav class="navbar navbar-expand-lg navbar-dark pl-0 pr-0 w-100">
+                    <div class="row w-100">
+
+                        <!-- Début du bouton hamburger -->
+                        <div class="col-2 col-sm-1 order-1" id="menu-hamb">
+                            <button class="navbar-toggler order-sm-1" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        </div>
+                        <!-- Fin du bouton hamburger -->
+
+                        <!-- Début du titre du site -->
+                        <a class="navbar-brand col-5 col-sm-2 col-md-7 col-lg-2 order-2 order-lg-0">
+                            Entreprise
+                        </a>
+                        <!-- Fin du titre du site -->
+
+                        <!-- Début de Mon Compte -->
+                        <div class="col-2 col-sm-3 col-md-2 col-lg-1 order-3 order-lg-2 my-auto item-user">
+                            <a>
+                                <i class="fas fa-user fa-lg"></i>
+                            </a>
+                            <span class="text-white text-center nav-m-right">Compte</span>
+                        </div>
+                        <!-- Fin de mon compte -->
+
+                        <!-- Début panier -->
+                        <div class="col-3 col-sm-3 col-md-2 col-lg-1 order-4 order-lg-3 my-auto item-cart">
+                            <a>
+                                <i class="fas fa-shopping-cart fa-lg"></i>
+                                <span class="badge badge-success">0</span>
+                            </a>
+                            <span class="text-white text-center nav-m-right">Panier</span>
+                        </div>
+                        <!-- Fin du panier -->
+
+                        <!-- Début du formulaire de recherche -->
+                        <form class="col-12 col-sm-12 col-md-12 col-lg-8 order-5 order-lg-1 my-auto form-search" method="get" action="" >
+                            <div class="input-group">
+                                <input type="text" class="form-control input-lg" placeholder="Chercher un article..." />
+                                <button class="input-group-prepend btn-search" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <!-- Fin du formulaire de recherche -->
+
+                        <!-- Début du menu principal -->
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 order-6 order-lg-4 collapse navbar-collapse pl-2" id="navbar">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{{ path('home') }}">Accueil</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Catégories
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        {% for categorie in categories %}
+                                            <a class="dropdown-item" href="{{ path('categorie', { 'id': categorie.id }) }}">{{ categorie.ProduitCategorieNom | capitalize }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Fin du menu principal -->
+
+                    </div>
+                </nav>
+                <!-- Fin de la navigation principale -->
+            </div>
+        </div>
+
+        <!-- Début du contenu principal -->
+        <main class="container">
+            <div class="main-content">
+                {% block body %}
+                {% endblock %}
+            </div>
+        </main>
+        <!-- Fin du contenu principal -->
+
+        <!-- Début du footer -->
+        <footer class="container-fluid bg-navbar p-0 footer">
+            <div class="container p-0">
+                <nav>
+                    <ul class="nav">
+                        <li><a href="{{ path('home') }}">Accueil</a></li>
+                        <li><a href="{{ path('home') }}">Tous nos produits</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3">© 2018 Copyright:
+                <a href="{{ path('home') }}"> Entreprise</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Fin du footer -->
+
+        <!-- Début Javascripts -->
+        <script type="application/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+        <script type="application/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+        <script type="application/javascript" src="{{ asset('js/all.min.js') }}"></script>
         {% block javascripts %}{% endblock %}
+        <!-- Fin Javascripts -->
     </body>
 </html>

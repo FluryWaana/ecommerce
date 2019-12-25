@@ -1,0 +1,102 @@
+/*
+ * Liste des couleurs principales
+ * Navbar: #00428a
+ *
+ */
+
+html, body {
+    height: 100%;
+    background-color: #d1d1d1;
+}
+
+/**
+ * Header
+ */
+.bg-navbar {
+    background-color: #00428a;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255, .8);
+}
+
+.navbar-brand {
+    margin-right: 0;
+}
+
+@media (min-width: 992px) {
+    #menu-hamb {
+        display: none;
+    }
+}
+
+@media (min-width: 576px) {
+    .nav-m-right {
+        display: block;
+    }
+}
+
+@media (max-width: 575px) {
+    .container-fluid {
+        padding: 0;
+    }
+
+    .nav-m-right {
+        display: none;
+    }
+
+    .navbar .row .form-search .input-group {
+        margin-top: .5em;
+    }
+}
+
+.navbar .row {
+    margin: 0;
+}
+
+.item-cart a:not([href]), .item-user a:not([href]) {
+    display: block;
+    color: #FFF;
+    text-align: center;
+}
+
+.btn-search {
+    background-color: #FFF;
+    border-top-right-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+    color: #495057;
+    border: 1px solid #ced4da;
+}
+
+/*
+ * Main Content
+ */
+main {
+    min-height: 100%;
+}
+
+.main-content {
+    overflow:auto;
+    padding-bottom:150px;
+}
+
+/**
+ * Footer
+ */
+
+.footer {
+    position: relative;
+    margin-top: -150px; /* negative value of footer height */
+    height: 150px;
+    clear:both;
+    padding-top:20px;
+}
+
+.footer-copyright {
+    background-color: #0031c0;
+    color: #FFF;
+}
+
+.footer-copyright a {
+    color: #FFF;
+}
