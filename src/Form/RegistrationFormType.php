@@ -22,7 +22,16 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('user_email', EmailType::class, [
-                'label' => 'Adresse e-mail'
+                'label' => 'Adresse e-mail',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrer une adresse e-mail',
+                    ]),
+                    new Length([
+                        'maxMessage' => 'L\'adresse e-mail doit contenir au maximum {{ limit }} caractères',
+                        'max' => 4096,
+                    ]),
+                ]
             ])
             ->add('user_password', RepeatedType::class, [
                 'type'            => PasswordType::class,
@@ -64,7 +73,7 @@ class RegistrationFormType extends AbstractType
             ->add('user_date_naissance', BirthdayType::class,[
                 'label'     => 'Anniversaire (facultatif)',
                 'required'  => false,
-                'format' => 'dd-MM-yyyy',
+                'format' => 'dd MM yyyy',
             ]);
     }
 

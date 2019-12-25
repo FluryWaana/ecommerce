@@ -3,30 +3,31 @@
 {% block title %}Création de compte{% endblock %}
 
 {% block body %}
-    <!-- Début du block d'inscription -->
-    <div class="card w-50 mx-auto">
-        <h1 class="card-header">Création de compte</h1>
+    <div class="row p-0">
+        <!-- Début du block d'inscription -->
+        <div class="offset-lg-3 col-lg-6 offset-lg-3 card p-0">
+            <h1 class="card-header">Création de compte</h1>
 
-        <div class="card-body">
-            <!-- Début du formulaire d'inscription -->
-            {{ form_start(registrationForm) }}
-            <h2>Vos identifiants</h2>
-            {{ form_row(registrationForm.user_email) }}
-            {{ form_row(registrationForm.user_password.first) }}
-            {{ form_row(registrationForm.user_password.second) }}
-            <hr />
-            <h2>Vos informations personnelles</h2>
-            {{ form_row(registrationForm.user_sexe) }}
-            {{ form_row(registrationForm.user_nom) }}
-            {{ form_row(registrationForm.user_prenom) }}
-            {{ form_row(registrationForm.user_date_naissance) }}
-            <div class="form-group text-center">
-                <button class="btn btn-primary">Valider</button>
+            <div class="card-body">
+                <!-- Début du formulaire d'inscription -->
+                {{ form_start(registrationForm) }}
+                <h2>Vos identifiants</h2>
+                {{ form_row(registrationForm.user_email) }}
+                {{ form_row(registrationForm.user_password.first) }}
+                {{ form_row(registrationForm.user_password.second) }}
+                <hr />
+                <h2>Vos informations personnelles</h2>
+                {{ form_row(registrationForm.user_sexe) }}
+                {{ form_row(registrationForm.user_nom) }}
+                {{ form_row(registrationForm.user_prenom) }}
+                {{ form_row(registrationForm.user_date_naissance) }}
+                <div class="form-group text-center">
+                    <button class="btn btn-primary">Valider</button>
+                </div>
+                {{ form_end(registrationForm) }}
+                <!-- Fin du formulaire d'inscription -->
             </div>
-            {{ form_end(registrationForm) }}
-            <!-- Fin du formulaire d'inscription -->
         </div>
+        <!-- Fin du block d'inscription -->
     </div>
-    <!-- Fin du block d'inscription -->
-
 {% endblock %}
