@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\ArticleCategorie;
+use App\Repository\ArticleCategorieRepository;
 use Symfony\Component\Routing\Annotation\Route;
+
+
 
 class HomeController extends Controller
 {
@@ -16,5 +18,13 @@ class HomeController extends Controller
             'controller_name' => 'HomeController',
             'categories'      => $this->getCategories()
         ]);
+    }
+
+    /**
+     * @Route("/test", name="test")
+     */
+    public function test()
+    {
+        $repo = $this->getDoctrine()->getRepository( ArticleCategorieRepository::class );
     }
 }

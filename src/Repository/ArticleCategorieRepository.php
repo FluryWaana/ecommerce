@@ -19,9 +19,8 @@ class ArticleCategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, ArticleCategorie::class);
     }
 
-    // /**
-    //  * @return ArticleCategorie[] Returns an array of ArticleCategorie objects
-    //  */
+    /**
+     * @return ArticleCategorie[] Returns an array of ArticleCategorie objects
     /*
     public function findByExampleField($value)
     {

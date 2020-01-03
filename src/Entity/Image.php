@@ -11,7 +11,6 @@ class Image
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
      * @ORM\Column(type="string", length=255)
      */
     private $image_uri;

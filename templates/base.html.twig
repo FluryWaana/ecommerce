@@ -92,22 +92,31 @@
                         <!-- Début du menu principal -->
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 order-6 order-lg-4 collapse navbar-collapse pl-2" id="navbar">
                             <ul class="navbar-nav mr-auto">
-                                <li class="nav-item active">
+                                <li class="nav-item {{ app.request.get('_route') == 'home' ? 'active' }}">
                                     <a class="nav-link" href="{{ path('home') }}">Accueil</a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Catégories
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        {% if( categories|length == 0 ) %}
-                                            Aucune catégorie de disponible
-                                        {% endif %}
-                                        {% for categorie in categories %}
-                                            <a class="dropdown-item" href="{{ path('categorie', { 'id': categorie.id }) }}">{{ categorie.ArticleCategorieNom | capitalize }}</a>
-                                        {% endfor %}
-                                    </div>
-                                </li>
+
+                                {% for categorie in categories %}
+                                    {% if categorie.articleCategorie is null %}
+                                        <li class="nav-item dropdown {{ app.request.get('_route') starts with 'categorie' ? 'active' }}">
+                                            <a class="nav-link dropdown-toggle" href="{{ path('categorie_index') }}" id="navbarDropdown{{ categorie.id }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{ categorie.ArticleCategorieNom | capitalize }}
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown{{ categorie.id }}">
+                                                {% if( categorie.Categorie | length == 0 ) %}
+                                                    Aucune catégorie de disponible
+                                                {% endif %}
+                                                {% for sscategorie in categorie.Categorie %}
+                                                    <a class="dropdown-item" href="{{ path('categorie', { 'id': sscategorie.id }) }}">{{ sscategorie.ArticleCategorieNom | capitalize }}</a>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    {% else %}
+                                        <li class="nav-item {{ app.request.get('_route') == 'home' ? 'active' }}">
+                                            <a class="nav-link" href="{{ path('categorie', { 'id': categorie.id }) }}">{{ categorie.ArticleCategorieNom | capitalize }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
                             </ul>
                         </div>
                         <!-- Fin du menu principal -->

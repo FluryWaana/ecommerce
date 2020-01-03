@@ -15,6 +15,6 @@ class Controller extends AbstractController
      */
     protected function getCategories() : Array
     {
-        return $this->getDoctrine()->getRepository( ArticleCategorie::class )->findAll();
+        return $this->getDoctrine()->getRepository( ArticleCategorie::class )->findBy(['articleCategorie' => null]);
     }
 }

@@ -10,6 +10,8 @@ class SecurityController extends Controller
 {
     /**
      * @Route("/login", name="app_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -28,6 +30,8 @@ class SecurityController extends Controller
             'categories'    => $this->getCategories()
         ]);
     }
+
+    //------------------------------------------------------------------------
 
     /**
      * @Route("/logout", name="app_logout")

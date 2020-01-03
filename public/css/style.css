@@ -160,3 +160,11 @@ main {
 #registration_form_user_sexe > .form-check {
     margin-right: 1em;
 }
+
+/**
+ * Article
+ */
+
+div.liste-article>article:nth-of-type(odd) {
+    background: #e0e0e0;
+}

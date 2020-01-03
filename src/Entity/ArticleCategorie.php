@@ -34,9 +34,21 @@ class ArticleCategorie
      */
     private $image_uri;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ArticleCategorie", inversedBy="categorie")
+     * @ORM\JoinColumn(name="article_categorie_parent_id", referencedColumnName="article_categorie_id", nullable=true)
+     */
+    private $articleCategorie;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleCategorie", mappedBy="articleCategorie")
+     */
+    private $categorie;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->categorie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,6 +107,49 @@ class ArticleCategorie
     public function setImageUri(Image $image_uri): self
     {
         $this->image_uri = $image_uri;
+
+        return $this;
+    }
+
+    public function getArticleCategorie(): ?self
+    {
+        return $this->articleCategorie;
+    }
+
+    public function setArticleCategorie(?self $articleCategorie): self
+    {
+        $this->articleCategorie = $articleCategorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getCategorie(): Collection
+    {
+        return $this->categorie;
+    }
+
+    public function addCategorie(self $categorie): self
+    {
+        if (!$this->categorie->contains($categorie)) {
+            $this->categorie[] = $categorie;
+            $categorie->setArticleCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategorie(self $categorie): self
+    {
+        if ($this->categorie->contains($categorie)) {
+            $this->categorie->removeElement($categorie);
+            // set the owning side to null (unless already changed)
+            if ($categorie->getArticleCategorie() === $this) {
+                $categorie->setArticleCategorie(null);
+            }
+        }
 
         return $this;
     }

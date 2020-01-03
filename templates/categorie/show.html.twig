@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ categorie.ArticleCategorieNom | capitalize }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4 col-lg-4 bg-primary rounded-left">
+            <h2 class="text-center text-white">Filtrer les articles</h2>
+        </div>
+        <div class="col-md-8 col-lg-8 bg-white liste-article rounded-right">
+            <h1>{{ categorie.ArticleCategorieNom | capitalize }}</h1>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item {{ num_page == 1 ? 'disabled' }}">
+                        <a class="page-link" href="{{ path('categorie', {id: categorie.Id, page: num_page - 1}) }}"> <i class="fas fa-angle-left"></i> </a>
+                    </li>
+                    {% for i in 1..page_max %}
+                        <li class="page-item {{ num_page == i ? 'active' }}">
+                            <a class="page-link" href="{{ path('categorie', {id: categorie.Id, page: i}) }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="page-item {{ num_page == page_max ? 'disabled' }}">
+                        <a class="page-link" href="{{ path('categorie', {id: categorie.Id, page: num_page + 1}) }}"> <i class="fas fa-angle-right"></i> </a>
+                    </li>
+                </ul>
+            </nav>
+
+            {% for article in articles %}
+                <article class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <a href="#">
+                            <img class="img-fluid" src="{{ asset('images/alimentation.png') }}" alt="Article {{ article.ArticleReference }}" />
+                        </a>
+                    </div>
+                    <div class="col-md-8 col-lg-8">
+                        <div class="row">
+                            <div class="col-8">
+                                <a href="#">
+                                    {{ article.ArticleReference }}
+                                </a><br/>
+                                <p class="text-justify">
+                                    {{ article.ArticleDescriptionCourte }}
+                                </p>
+                            </div>
+                            <div class="col-4">
+                                {{ article.ArticlePrixHt }} €
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

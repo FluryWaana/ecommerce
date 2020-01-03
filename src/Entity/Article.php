@@ -14,7 +14,6 @@ class Article
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
      * @ORM\Column(type="string", length=25)
      */
     private $article_reference;
@@ -96,6 +95,13 @@ class Article
     public function getArticleReference(): ?int
     {
         return $this->article_reference;
+    }
+
+    public function setArticleReference(string $article_reference): self
+    {
+        $this->article_reference = $article_reference;
+
+        return $this;
     }
 
     public function getArticleDesignation(): ?string
