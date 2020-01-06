@@ -21,10 +21,9 @@ class ArticleCategorieType extends AbstractType
                 'required' => true,
                 'label'    => 'Nom de la catégorie'
             ])
-            ->add('image_uri', EntityType::class, [
-                'class' => Image::class,
-                'required'     => true,
-                'mapped'       => true,
+            ->add('image_uri', FileType::class, [
+                'required'     => false,
+                'mapped'       => false,
                 'constraints'  => [
                     new File([
                         'mimeTypes' => [

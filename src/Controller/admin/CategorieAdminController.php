@@ -3,12 +3,16 @@
 namespace App\Controller\admin;
 
 use App\Entity\ArticleCategorie;
+use App\Entity\Image;
 use App\Form\ArticleCategorieType;
 use App\Repository\ArticleCategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Exception;
 
 /**
  * @Route("/admin/categorie")
@@ -34,44 +38,51 @@ class CategorieAdminController extends AbstractController
         $form = $this->createForm(ArticleCategorieType::class, $articleCategorie);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager = $this->getDoctrine()->getManager();
 
-            // Récupération de l'image
-            $brochureFile = $form['image_uri']->getData();
+        if ( $form->isSubmitted() && $form->isValid() )
+        {
+            try
+            {
+                // Récupération de l'image
+                $image = $form['image_uri']->getData();
 
-
-            dd( $brochureFile );
-            /*if ($brochureFile) {
-                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $brochureFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                // Vérifie si l'image est présent dans la requête
+                if( is_null( $image ) )
+                {
+                    throw new Exception('Une image est obligatoire pour créer une catégorie.');
                 }
 
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $product->setBrochureFilename($newFilename);*/
+                // Attribut un nom unique a l'image
+                $newName = uniqid() . '.' . $image->guessExtension();
 
+                // Déplace l'image dans le répertoire public/images
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $newName
+                );
 
+                // Création de l'image
+                $imageCategorie = new Image();
+                $imageCategorie->setImageUri('images/' . $newName);
+                $entityManager->persist( $imageCategorie );
 
+                // Mise à jour de la catégorie
+                $articleCategorie->setImageUri( $imageCategorie );
 
+                $entityManager->persist($articleCategorie);
+                $entityManager->flush();
 
-
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($articleCategorie);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('article_categorie_index');
+                return $this->redirectToRoute('categorie_index');
+            }
+            catch ( FileException $e )
+            {
+                $this->addFlash('errors', 'Une erreur est survenue lors de l\'upload de l\'image');
+            }
+            catch ( Exception $e )
+            {
+                $this->addFlash('errors', $e->getMessage());
+            }
         }
 
         return $this->render('admin/categorie/new.html.twig', [
@@ -97,11 +108,56 @@ class CategorieAdminController extends AbstractController
     {
         $form = $this->createForm(ArticleCategorieType::class, $articleCategorie);
         $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        try
+        {
+            // Récupération de l'image
+            $image = $form['image_uri']->getData();
 
-            return $this->redirectToRoute('categorie_index');
+            // Vérifie si l'image est présent dans la requête
+            if( ! is_null( $image ) )
+            {
+                // Instanciation du FileSystem
+                $filesystem = new Filesystem();
+
+                // Si le fichier existe alors on le supprime
+                if( $filesystem->exists( $articleCategorie->getImageUri()->getImageUri() ) )
+                {
+                    $filesystem->remove( $articleCategorie->getImageUri()->getImageUri() );
+                }
+
+                // Attribut un nom unique a l'image
+                $newName = uniqid() . '.' . $image->guessExtension();
+
+                // Déplace l'image dans le répertoire public/images
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $newName
+                );
+
+                // Création de l'image
+                $imageCategorie = new Image();
+                $imageCategorie->setImageUri('images/' . $newName);
+                $entityManager->persist( $imageCategorie );
+
+                $articleCategorie->setImageUri( $imageCategorie );
+            }
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $entityManager->flush();
+
+                return $this->redirectToRoute('categorie_index');
+            }
+        }
+        catch ( FileException $e )
+        {
+            $this->addFlash('errors', 'Une erreur est survenue lors de la mise à jour de l\'image');
+        }
+        catch ( Exception $e )
+        {
+            $this->addFlash('errors', $e->getMessage());
         }
 
         return $this->render('admin/categorie/edit.html.twig', [

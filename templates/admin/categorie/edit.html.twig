@@ -1,13 +1,23 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Edit ArticleCategorie{% endblock %}
+{% block title %}Modification d'une catégorie{% endblock %}
 
 {% block body %}
-    <h1>Edit ArticleCategorie</h1>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <h1 class="col">Modification d'une catégorie</h1>
+                    <div class="col-2 text-right my-auto">
+                        <a href="{{ path('categorie_index') }}" style="font-size: 1.5em;"><i class="fas fa-arrow-circle-left"></i></a>
+                    </div>
+                </div>
+            </div>
 
-    {{ include('categorie/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('article_categorie_index') }}">back to list</a>
-
-    {{ include('categorie/_delete_form.html.twig') }}
+            <div class="card-body">
+                {{ include('admin/categorie/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                {{ include('admin/categorie/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
