@@ -4,10 +4,10 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-4 col-lg-4 bg-primary rounded-left">
+        <div class="col-md-3 col-lg-3 bg-primary rounded-left">
             <h2 class="text-center text-white">Filtrer les articles</h2>
         </div>
-        <div class="col-md-8 col-lg-8 bg-white liste-article rounded-right">
+        <div class="col-md-9 col-lg-9 bg-white liste-article rounded-right">
             <h1>{{ categorie.ArticleCategorieNom | capitalize }}</h1>
 
             <nav aria-label="Page navigation example">
@@ -45,6 +45,15 @@
                             </div>
                             <div class="col-4">
                                 {{ article.ArticlePrixHt }} €
+
+                                <form>
+                                    <label for="article_quantite">Quantité</label>
+                                    <input type="number" min="1" id="article_quantite" />
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </form>
+
                             </div>
                         </div>
                     </div>

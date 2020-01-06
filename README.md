@@ -15,7 +15,7 @@ DATABASE_URL=mysql://root:@127.0.0.1:3306/ecommerce?serverVersion=5.7
 ## Base de données
 
 ### Création de la database
-** /!\ Le serveur MySQL doit être lancé et la database ecommerce ne doit pas exister /!\**
+** /!\ Le serveur MySQL doit être lancé et la database ecommerce ne doit pas exister /!\ **
 ~~~bash
 php bin/console doctrine:database:create
 ~~~
