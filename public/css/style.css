@@ -10,6 +10,18 @@ html, body {
 }
 
 /**
+ * Modification bootstrap
+ */
+.bg-primary {
+    background-color: #00428a!important;
+}
+
+.page-item.active a.page-link {
+    background-color: #00428a!important;
+    border-color: #00428a!important;
+}
+
+/**
  * Header
  */
 .bg-navbar {
