@@ -1,0 +1,49 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <h1 class="col">Liste des catégories</h1>
+
+        <div class="col-md-3">
+            <a class="btn btn-primary" href="{{ path('categorie_new') }}">
+                <i class="fas fa-plus"></i>
+                Créer nouvelle catégorie
+            </a>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article_categorie in article_categories %}
+            <tr>
+                <td>{{ article_categorie.articleCategorieId }}</td>
+                <td>{{ article_categorie.articleCategorieNom }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('categorie_show', {'article_categorie_id': article_categorie.articleCategorieId}) }}">
+                        <i class="fas fa-eye"></i>
+                        Voir
+                    </a>
+                    <a class="btn btn-primary" href="{{ path('categorie_edit', {'article_categorie_id': article_categorie.articleCategorieId}) }}">
+                        <i class="fas fa-edit"></i>
+                        Modifier
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

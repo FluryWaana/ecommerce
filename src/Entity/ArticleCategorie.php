@@ -56,6 +56,11 @@ class ArticleCategorie
         return $this->article_categorie_id;
     }
 
+    public function getarticleCategorieId(): ?int
+    {
+        return $this->article_categorie_id;
+    }
+
     public function getArticleCategorieNom(): ?string
     {
         return $this->article_categorie_nom;

@@ -1,0 +1,46 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h1>Article</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Article_reference</th>
+                <td>{{ article.articleReference }}</td>
+            </tr>
+            <tr>
+                <th>Article_designation</th>
+                <td>{{ article.articleDesignation }}</td>
+            </tr>
+            <tr>
+                <th>Article_prix_ht</th>
+                <td>{{ article.articlePrixHt }}</td>
+            </tr>
+            <tr>
+                <th>Article_description_courte</th>
+                <td>{{ article.articleDescriptionCourte }}</td>
+            </tr>
+            <tr>
+                <th>Article_description_longue</th>
+                <td>{{ article.articleDescriptionLongue }}</td>
+            </tr>
+            <tr>
+                <th>Article_minimum_stock</th>
+                <td>{{ article.articleMinimumStock }}</td>
+            </tr>
+            <tr>
+                <th>Article_stock</th>
+                <td>{{ article.articleStock }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('article_index') }}">back to list</a>
+
+    <a href="{{ path('article_edit', {'article_reference': article.article_reference}) }}">edit</a>
+
+    {{ include('article/_delete_form.html.twig') }}
+{% endblock %}
