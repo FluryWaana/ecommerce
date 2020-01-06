@@ -92,6 +92,11 @@ class Article
         $this->fournisseurs = new ArrayCollection();
     }
 
+    public function getArticle_reference()
+    {
+        return $this->article_reference;
+    }
+
     public function getArticleReference(): ?int
     {
         return $this->article_reference;

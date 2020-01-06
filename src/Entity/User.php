@@ -93,6 +93,11 @@ class User implements UserInterface
         return $this->user_id;
     }
 
+    public function getUser_Id()
+    {
+        return $this->user_id;
+    }
+
     public function getUserEmail(): ?string
     {
         return $this->user_email;
