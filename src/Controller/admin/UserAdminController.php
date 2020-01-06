@@ -31,7 +31,7 @@ class UserAdminController extends AbstractController
     public function new(Request $request): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

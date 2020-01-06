@@ -26,7 +26,7 @@ class Image
      */
     private $article;
 
-    public function getImageUri(): ?int
+    public function getImageUri(): ?string
     {
         return $this->image_uri;
     }
