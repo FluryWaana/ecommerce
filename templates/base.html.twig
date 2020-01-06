@@ -59,7 +59,7 @@
                                     <span class="username">Bonjour {{ app.user.UserPrenom | capitalize }}</span>
                                     <div class="dropdown-divider mt-0"></div>
                                     {% if is_granted('ROLE_ADMIN') %}
-                                        <a class="dropdown-item" href="{{ path('user_account') }}">Administration</a>
+                                        <a class="dropdown-item" href="{{ path('admin_home') }}">Administration</a>
                                     {% endif %}
                                     <a class="dropdown-item" href="{{ path('user_account') }}">Votre compte</a>
                                     <a class="dropdown-item" href="{{ path('user_order') }}">Vos commandes</a>
