@@ -14,6 +14,7 @@ class UserController extends Controller
     {
         return $this->render('user/index.html.twig', [
             'controller_name' => 'UserController',
+            'categories'      => $this->getCategories()
         ]);
     }
 }
