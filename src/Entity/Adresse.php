@@ -53,11 +53,17 @@ class Adresse
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="commande_adresse_facture")
      */
-    private $commandes;
+    private $commande_facture;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="commande_adresse_livraison")
+     */
+    private $commande_livraison;
 
     public function __construct()
     {
-        $this->commandes = new ArrayCollection();
+        $this->commande_facture     = new ArrayCollection();
+        $this->commande_livraison = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,25 +146,56 @@ class Adresse
     /**
      * @return Collection|Commande[]
      */
-    public function getCommandes(): Collection
+    public function getCommandeFacture(): Collection
     {
-        return $this->commandes;
+        return $this->commande_facture;
     }
 
-    public function addCommande(Commande $commande): self
+    public function addCommandeFacture(Commande $commande): self
     {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes[] = $commande;
+        if (!$this->commande_facture->contains($commande)) {
+            $this->commande_facture[] = $commande;
             $commande->setCommandeAdresseFacture($this);
         }
 
         return $this;
     }
 
-    public function removeCommande(Commande $commande): self
+    public function removeCommandeFacture(Commande $commande): self
     {
-        if ($this->commandes->contains($commande)) {
-            $this->commandes->removeElement($commande);
+        if ($this->commande_facture->contains($commande)) {
+            $this->commande_facture->removeElement($commande);
+            // set the owning side to null (unless already changed)
+            if ($commande->getCommandeAdresseFacture() === $this) {
+                $commande->setCommandeAdresseFacture(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandeLivraison(): Collection
+    {
+        return $this->commande_livraison;
+    }
+
+    public function addCommandeLivraison(Commande $commande): self
+    {
+        if (!$this->commande_livraison->contains($commande)) {
+            $this->commande_livraison[] = $commande;
+            $commande->setCommandeAdresseFacture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeLivraison(Commande $commande): self
+    {
+        if ($this->commande_livraison->contains($commande)) {
+            $this->commande_livraison->removeElement($commande);
             // set the owning side to null (unless already changed)
             if ($commande->getCommandeAdresseFacture() === $this) {
                 $commande->setCommandeAdresseFacture(null);

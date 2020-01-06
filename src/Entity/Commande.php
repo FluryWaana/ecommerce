@@ -51,13 +51,13 @@ class Commande
     private $commandeAvoirArticles;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Adresse", inversedBy="commandes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Adresse", inversedBy="commande_facture")
      * @ORM\JoinColumn(name="commande_adresse_facture", referencedColumnName="adresse_id",nullable=false)
      */
     private $commande_adresse_facture;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Adresse", inversedBy="commandes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Adresse", inversedBy="commande_livraison")
      * @ORM\JoinColumn(name="commande_adresse_livraison", referencedColumnName="adresse_id",nullable=false)
      */
     private $commande_adresse_livraison;
