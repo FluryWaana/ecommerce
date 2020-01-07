@@ -3,18 +3,46 @@
 {% block title %}Hello PanierController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/Workspace/PHP/commerce/01-Symfony/src/Controller/PanierController.php'|file_link(0) }}">src/Controller/PanierController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/Workspace/PHP/commerce/01-Symfony/templates/panier/index.html.twig'|file_link(0) }}">templates/panier/index.html.twig</a></code></li>
-    </ul>
+<div class="card">
+    <h1 class="card-header">Panier</h1>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Référence</th>
+                <th class="text-center">Quantité</th>
+                <th class="text-center">Prix</th>
+                <th class="text-center">Sous-total</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set total = 0 %}
+            {% for article in app.session.get('panier') %}
+                {% set total = total + (article.quantite * article.article.ArticlePrixHt) %}
+                <tr>
+                    <td><img class="img-fluid" src="{{ asset('images/alimentation.png') }}" style="width: 100px" ></td>
+                    <td><a href="#">{{ article.article.ArticleReference }}</td>
+                    <td class="text-center">{{ article.quantite }}</td>
+                    <td class="text-center">{{ article.article.ArticlePrixHt }}€</td>
+                    <td class="text-center">{{ article.quantite * article.article.ArticlePrixHt }}€</td>
+                    <td class="text-center">
+                        <a href="#" class="text-danger">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4" class="text-right">TOTAL</td>
+                <td class="text-center">{{ total }}€</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-right">
+            <button class="btn btn-primary">Commander</button>
+        </div>
+    </div>
 </div>
 {% endblock %}

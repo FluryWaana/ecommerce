@@ -46,13 +46,14 @@
                             <div class="col-4">
                                 <div class="price mt-2"> {{ article.ArticlePrixHt }} €</div>
 
-                                <form class="mt-lg-3 mt-md-3">
+                                <form class="mt-lg-3 mt-md-3 form-add-art">
                                     <div class="form-group">
                                         <div class="d-flex justify-content-center">
                                             <button class="btn-rem-qt-article">
                                                 <i class="fas fa-minus"></i>
                                             </button>
-                                            <input type="number" min="1" value="1" class="input-qt-article" />
+                                            <input type="hidden" name="article_reference" value="{{ article.ArticleReference }}" />
+                                            <input type="number" name="article_quantite" min="1" value="1" class="input-qt-article" />
                                             <button class="btn-add-qt-article">
                                                 <i class="fas fa-plus"></i>
                                             </button>
@@ -60,7 +61,7 @@
 
                                     </div>
                                     <div class="form-group text-right">
-                                        <button class="btn btn-primary">
+                                        <button class="btn btn-primary btn-add-cart">
                                             <i class="fas fa-cart-plus"></i>
                                         </button>
                                     </div>
@@ -97,19 +98,43 @@
                 $( '.btn-rem-qt-article' ).on('click', evt => {
                     evt.preventDefault();
 
-                    let num = parseInt( $( $( evt.currentTarget ).siblings()[0] ).val() );
+                    let num = parseInt( $( $( evt.currentTarget ).siblings()[1] ).val() );
 
                     if( num > 1 ) {
                         num -= 1;
-                        $( $( evt.currentTarget ).siblings()[0] ).val( num );
+                        $( $( evt.currentTarget ).siblings()[1] ).val( num );
                     }
                 });
 
                 $( '.btn-add-qt-article' ).on('click', evt => {
                     evt.preventDefault();
 
-                    let num = parseInt( $( $( evt.currentTarget ).siblings()[1] ).val() ) + 1;
-                    $( $( evt.currentTarget ).siblings()[1] ).val( num );
+                    let num = parseInt( $( $( evt.currentTarget ).siblings()[2] ).val() ) + 1;
+                    $( $( evt.currentTarget ).siblings()[2] ).val( num );
+                });
+
+                $( '.form-add-art' ).on('click', '.btn-add-cart', evt => {
+                    evt.preventDefault();
+
+                    var formData = new FormData( evt.currentTarget.form );
+
+
+                    $.ajax({
+                        dataType : "json",
+                        contentType: "application/json; charset=utf-8",
+                        url: '{{ path('panier_add_article') }}',
+                        type: 'POST',
+                        data: JSON.stringify({
+                            article_reference: formData.get('article_reference'),
+                            article_quantite: formData.get('article_quantite')
+                        }),
+                        success: function() {
+                            window.location = "../panier";
+                        },
+                        error: function() {
+
+                        }
+                    });
                 });
             });
         </script>

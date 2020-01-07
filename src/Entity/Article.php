@@ -97,7 +97,7 @@ class Article
         return $this->article_reference;
     }
 
-    public function getArticleReference(): ?int
+    public function getArticleReference(): ?string
     {
         return $this->article_reference;
     }
