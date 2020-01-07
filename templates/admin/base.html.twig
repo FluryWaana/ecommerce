@@ -86,6 +86,21 @@
             </div>
         </li>
 
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSuppliers" aria-expanded="true" aria-controls="collapseSuppliers">
+                <i class="fas fa-fw fa-hand-middle-finger"></i>
+                <span>Fournisseurs</span>
+            </a>
+            <div id="collapseSuppliers" class="collapse" aria-labelledby="headingSuppliers" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Actions :</h6>
+                    <a class="collapse-item" href="{{ path("fournisseur_index") }}">Liste des fournisseurs</a>
+                    <a class="collapse-item" href="{{ path("fournisseur_new") }}">Ajouter un fournisseur</a>
+                </div>
+            </div>
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 

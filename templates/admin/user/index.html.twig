@@ -3,52 +3,61 @@
 {% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <h1 class="col">Liste des utilisateurs</h1>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h1 class="col">Liste des utilisateurs</h1>
+                <div class="col-2 text-right my-auto">
+                    <a href="{{ path('user_new') }}" class="text-decoration-none" style="font-size: 1.5em;" title="Créer un user">
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
+                    <a href="{{ path('user_index') }}" style="font-size: 1.5em;" title="Revenir à la liste des users">
+                        <i class="fas fa-arrow-circle-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-        <div class="col-md-3">
-            <a class="btn btn-primary" href="{{ path('user_new') }}">
-                <i class="fas fa-plus"></i>
-                Créer un nouvel utilisateur
-            </a>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Date de création</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.userId }}</td>
+                        <td>{{ user.userEmail }}</td>
+                        <td>{{ user.userNom }}</td>
+                        <td>{{ user.userPrenom }}</td>
+                        <td>{{ user.userCreatedAt ? user.userCreatedAt|date('d-m-Y') : '' }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('user_show', {'user_id': user.userId}) }}">
+                                <i class="fas fa-eye"></i>
+                                Voir
+                            </a>
+                            <a class="btn btn-primary" href="{{ path('user_edit', {'user_id': user.userId}) }}">
+                                <i class="fas fa-edit"></i>
+                                Modifier
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="11">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Date de création</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.userId }}</td>
-                <td>{{ user.userEmail }}</td>
-                <td>{{ user.userNom }}</td>
-                <td>{{ user.userPrenom }}</td>
-                <td>{{ user.userCreatedAt ? user.userCreatedAt|date('d-m-Y') : '' }}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('user_show', {'user_id': user.userId}) }}">
-                        <i class="fas fa-eye"></i>
-                        Voir
-                    </a>
-                    <a class="btn btn-primary" href="{{ path('user_edit', {'user_id': user.userId}) }}">
-                        <i class="fas fa-edit"></i>
-                        Modifier
-                    </a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+</div>
 {% endblock %}

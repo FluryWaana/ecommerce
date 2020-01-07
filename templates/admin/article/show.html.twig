@@ -3,44 +3,64 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
-    <h1>Article</h1>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h1 class="col">Consultation de l'article : {{ article.articleDesignation }}</h1>
+                <div class="col-2 text-right my-auto">
+                    <a href="{{ path('article_index') }}" style="font-size: 1.5em;"><i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+            </div>
+        </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Article_reference</th>
-                <td>{{ article.articleReference }}</td>
-            </tr>
-            <tr>
-                <th>Article_designation</th>
-                <td>{{ article.articleDesignation }}</td>
-            </tr>
-            <tr>
-                <th>Article_prix_ht</th>
-                <td>{{ article.articlePrixHt }}</td>
-            </tr>
-            <tr>
-                <th>Article_description_courte</th>
-                <td>{{ article.articleDescriptionCourte }}</td>
-            </tr>
-            <tr>
-                <th>Article_description_longue</th>
-                <td>{{ article.articleDescriptionLongue }}</td>
-            </tr>
-            <tr>
-                <th>Article_minimum_stock</th>
-                <td>{{ article.articleMinimumStock }}</td>
-            </tr>
-            <tr>
-                <th>Article_stock</th>
-                <td>{{ article.articleStock }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Article_reference</th>
+                        <td>{{ article.articleReference }}</td>
+                    </tr>
+                    <tr>
+                        <th>Article_designation</th>
+                        <td>{{ article.articleDesignation }}</td>
+                    </tr>
+                    <tr>
+                        <th>Article_prix_ht</th>
+                        <td>{{ article.articlePrixHt }}</td>
+                    </tr>
+                    <tr>
+                        <th>Article_description_courte</th>
+                        <td>{{ article.articleDescriptionCourte }}</td>
+                    </tr>
+                    <tr>
+                        <th>Article_description_longue</th>
+                        <td>{{ article.articleDescriptionLongue }}</td>
+                    </tr>
+                    <tr>
+                        <th>Article_minimum_stock</th>
+                        <td>{{ article.articleMinimumStock }}</td>
+                    </tr>
+                    <tr>
+                        <th>Article_stock</th>
+                        <td>{{ article.articleStock }}</td>
+                    </tr>
+                    {% for image in article.ImageUri %}
+                    <tr>
+                        <th>Image</th>
+                        <td>
+                            <img src="{{ asset( image.ImageUri ) }}" class="img-fluid cat-img-prev"/>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="d-flex">
+                <a class="btn btn-primary mr-3" href="{{ path('article_edit', {'article_reference': article.article_reference}) }}">Modifier</a>
 
-    <a href="{{ path('article_index') }}">back to list</a>
-
-    <a href="{{ path('article_edit', {'article_reference': article.article_reference}) }}">edit</a>
-
-    {{ include('article/_delete_form.html.twig') }}
+                {{ include('admin/article/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

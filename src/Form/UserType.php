@@ -43,6 +43,7 @@ class UserType extends AbstractType
                     'Administrateur' => 'ROLE_ADMIN',
                     'Utilisateur' => 'ROLE_USER' ],
                 'multiple' => true ])
+
             ->add('user_password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'required' => true,
