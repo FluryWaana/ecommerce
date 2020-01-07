@@ -173,6 +173,16 @@ class CategorieAdminController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$articleCategorie->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+
+            // Instanciation du FileSystem
+            $filesystem = new Filesystem();
+
+            // Si le fichier existe alors on le supprime
+            if( $filesystem->exists( $articleCategorie->getImageUri()->getImageUri() ) )
+            {
+                $filesystem->remove( $articleCategorie->getImageUri()->getImageUri() );
+            }
+
             $entityManager->remove($articleCategorie);
             $entityManager->flush();
         }
