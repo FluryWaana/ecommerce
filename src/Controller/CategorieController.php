@@ -11,14 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategorieController extends Controller
 {
     /**
-     * @Route("/categorie", name="categorie_index")
+     * @Route("/categorie", name="categorie_front_index")
      * @return Response
      */
     public function index() {
         $repo = $this->getDoctrine()->getRepository(ArticleCategorie::class);
 
         return $this->render('categorie/index.html.twig', [
-            'categories' => $repo->findAll()
+            'categories' => $this->getCategories()
         ]);
     }
 
@@ -65,7 +65,7 @@ class CategorieController extends Controller
          */
         if( $articles->getIterator()->count() === 0 )
         {
-            return $this->redirectToRoute('categorie', ['id' => $categorie->getId()]);
+            return $this->redirectToRoute('categorie_front_index');
         }
 
         /**

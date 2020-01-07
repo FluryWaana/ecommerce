@@ -97,7 +97,7 @@
                                 </li>
 
                                 {% for categorie in categories %}
-                                    {% if categorie.articleCategorie is null %}
+                                    {% if categorie.articleCategorie is null and categorie.Categorie | length > 0%}
                                         <li class="nav-item dropdown {{ app.request.get('_route') starts with 'categorie' ? 'active' }}">
                                             <a class="nav-link dropdown-toggle" href="{{ path('categorie_index') }}" id="navbarDropdown{{ categorie.id }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 {{ categorie.ArticleCategorieNom | capitalize }}
