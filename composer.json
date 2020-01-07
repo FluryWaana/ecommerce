@@ -30,8 +30,7 @@
         "symfony/twig-pack": "*",
         "symfony/validator": "5.0.*",
         "symfony/web-link": "5.0.*",
-        "symfony/yaml": "5.0.*",
-        "doctrine/doctrine-fixtures-bundle": "^3.3"
+        "symfony/yaml": "5.0.*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
@@ -70,8 +69,7 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "doctrine:migrations:migrate --no-interaction": "symfony-cmd",
-            "doctrine:fixtures:load --no-interaction": "symfony-cmd"
+            "doctrine:migrations:migrate --no-interaction": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
