@@ -86,6 +86,7 @@ class User implements UserInterface
     {
         $this->commandes = new ArrayCollection();
         $this->adresses = new ArrayCollection();
+        $this->user_created_at = new \DateTime();
     }
 
     public function getId(): ?int

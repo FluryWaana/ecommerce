@@ -3,11 +3,9 @@
 namespace App\Form;
 
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,7 +15,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class UserType extends AbstractType
+class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -42,10 +40,11 @@ class UserType extends AbstractType
                 'choices' => [
                     'Administrateur' => 'ROLE_ADMIN',
                     'Utilisateur' => 'ROLE_USER' ],
-                'multiple' => true ])
+                'multiple' => true
+            ])
             ->add('user_password', PasswordType::class, [
                 'label' => 'Mot de passe',
-                'required' => true,
+                'required' => false,
                 'constraints'     => [
                     new NotBlank([
                         'message' => 'Entrer un mot de passe',

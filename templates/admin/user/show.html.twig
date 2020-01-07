@@ -1,58 +1,74 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Visualisation utilisateur{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <h1 class="col"> Visualisation d'un utilisateur</h1>
+                    <div class="col-2 text-right my-auto">
+                        <a href="{{ path('user_index') }}" style="font-size: 1.8em;"><i class="fas fa-arrow-circle-left"></i></a>
+                    </div>
+                </div>
+            </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>User_id</th>
-                <td>{{ user.userId }}</td>
-            </tr>
-            <tr>
-                <th>User_email</th>
-                <td>{{ user.userEmail }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>User_password</th>
-                <td>{{ user.userPassword }}</td>
-            </tr>
-            <tr>
-                <th>User_nom</th>
-                <td>{{ user.userNom }}</td>
-            </tr>
-            <tr>
-                <th>User_prenom</th>
-                <td>{{ user.userPrenom }}</td>
-            </tr>
-            <tr>
-                <th>User_date_naissance</th>
-                <td>{{ user.userDateNaissance ? user.userDateNaissance|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>User_created_at</th>
-                <td>{{ user.userCreatedAt ? user.userCreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>User_updated_at</th>
-                <td>{{ user.userUpdatedAt ? user.userUpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>User_sexe</th>
-                <td>{{ user.userSexe }}</td>
-            </tr>
-        </tbody>
-    </table>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ user.userId }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ user.userEmail }}</td>
+                    </tr>
+                    <tr>
+                        <th>Role</th>
+                        <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ user.userNom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prenom</th>
+                        <td>{{ user.userPrenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de naissance</th>
+                        <td>{{ user.userDateNaissance ? user.userDateNaissance|date('Y-m-d') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de création</th>
+                        <td>{{ user.userCreatedAt ? user.userCreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de dernière modification</th>
+                        <td>{{ user.userUpdatedAt ? user.userUpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Sexe</th>
+                        <td>{% if user.userSexe == 'h'%} Homme {% elseif user.userSexe == 'f' %} Femme {% endif %}</td>
+                    </tr>
+                    </tbody>
+                </table>
 
-    <a href="{{ path('user_index') }}">back to list</a>
+                <div class="row">
+                    <div class="col-md-2">
+                        <a class="btn btn-primary" href="{{ path('user_edit', {'user_id': user.userId}) }}">
+                            <i class="fas fa-edit"></i>
+                            Modifier</a>
+                    </div>
+                    <div class="col-md-2">
+                        {{ include('admin/user/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('user_edit', {'user_id': user.user_id}) }}">edit</a>
 
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
