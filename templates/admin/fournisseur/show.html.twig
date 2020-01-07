@@ -1,0 +1,50 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Voir Fournisseur{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h1 class="col">Consultation du fournisseur : {{ fournisseur.fournisseurNom }}</h1>
+                <div class="col-2 text-right my-auto">
+                    <a href="{{ path('fournisseur_index') }}" style="font-size: 1.5em;"><i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Fournisseur_reference</th>
+                    <td>{{ fournisseur.fournisseurReference }}</td>
+                </tr>
+                <tr>
+                    <th>Fournisseur_nom</th>
+                    <td>{{ fournisseur.fournisseurNom }}</td>
+                </tr>
+                <tr>
+                    <th>Fournisseur_telephone</th>
+                    <td>{{ fournisseur.fournisseurTelephone }}</td>
+                </tr>
+                <tr>
+                    <th>Fournisseur_email</th>
+                    <td>{{ fournisseur.fournisseurEmail }}</td>
+                </tr>
+                <tr>
+                    <th>Fournisseur_site</th>
+                    <td>{{ fournisseur.fournisseurSite }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex">
+                <a class="btn btn-primary mr-3" href="{{ path('fournisseur_edit', {'fournisseur_reference': fournisseur.fournisseurReference}) }}">Modifier</a>
+
+                {{ include('admin/fournisseur/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

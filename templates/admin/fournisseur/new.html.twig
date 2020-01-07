@@ -1,21 +1,21 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Création Article{% endblock %}
+{% block title %}Création Fournisseur{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <h1 class="col">Création d'un article</h1>
+                    <h1 class="col">Création d'un fournisseur</h1>
                     <div class="col-2 text-right my-auto">
-                        <a href="{{ path('article_index') }}" style="font-size: 1.5em;"><i class="fas fa-arrow-circle-left"></i></a>
+                        <a href="{{ path('fournisseur_index') }}" style="font-size: 1.5em;"><i class="fas fa-arrow-circle-left"></i></a>
                     </div>
                 </div>
             </div>
 
             <div class="card-body">
-                {{ include('admin/article/_form.html.twig') }}
+                {{ include('admin/fournisseur/_form.html.twig') }}
             </div>
         </div>
     </div>

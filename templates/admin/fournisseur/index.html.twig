@@ -1,0 +1,63 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Fournisseur liste{% endblock %}
+
+{% block body %}
+<div class="container p-0">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h1 class="col">Liste des fournisseurs</h1>
+                <div class="col-2 text-right my-auto">
+                    <a href="{{ path('fournisseur_new') }}" class="text-decoration-none" style="font-size: 1.5em;" title="Créer un fournisseur">
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
+                    <a href="{{ path('fournisseur_index') }}" style="font-size: 1.5em;" title="Revenir à la liste des fournisseur">
+                        <i class="fas fa-arrow-circle-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Reference</th>
+                        <th>Nom</th>
+                        <th>Telephone</th>
+                        <th>Email</th>
+                        <th>Site web</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for fournisseur in fournisseurs %}
+                    <tr>
+                        <td>{{ fournisseur.fournisseurReference }}</td>
+                        <td>{{ fournisseur.fournisseurNom }}</td>
+                        <td>{{ fournisseur.fournisseurTelephone }}</td>
+                        <td>{{ fournisseur.fournisseurEmail }}</td>
+                        <td>{{ fournisseur.fournisseurSite }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('fournisseur_show', {'fournisseur_reference': fournisseur.fournisseurReference}) }}">
+                                <i class="fas fa-eye"></i>
+                                Voir
+                            </a>
+                            <a class="btn btn-primary" href="{{ path('fournisseur_edit', {'fournisseur_reference': fournisseur.fournisseurReference}) }}">
+                                <i class="fas fa-edit"></i>
+                                Modifier
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

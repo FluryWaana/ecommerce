@@ -64,6 +64,11 @@ class Fournisseur
         return $this->fournisseur_reference;
     }
 
+    public function getFournisseurReference(): ?int
+    {
+        return $this->fournisseur_reference;
+    }
+
     public function getFournisseurNom(): ?string
     {
         return $this->fournisseur_nom;
