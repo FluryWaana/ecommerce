@@ -4,26 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CategorieController extends Controller
+class CategorieController extends AbstractController
 {
-    /**
-     * @Route("/categorie", name="categorie_front_index")
-     * @return Response
-     */
-    public function index() {
-        $repo = $this->getDoctrine()->getRepository(ArticleCategorie::class);
-
-        return $this->render('categorie/index.html.twig', [
-            'categories' => $this->getCategories()
-        ]);
-    }
-
-    //------------------------------------------------------------------------
-
     /**
      * @Route("/categorie/{id}", name="categorie")
      * @param Request $request
@@ -68,7 +55,6 @@ class CategorieController extends Controller
 
         return $this->render('categorie/show.html.twig', [
             'categorie'  => $categorie,
-            'categories' => $this->getCategories(),
             'articles'   => $articles,
             'page_max'   => $nb_page_max,
             'num_page'   => $num_page

@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ArticleController extends Controller
+class ArticleController extends AbstractController
 {
     /**
      * @Route("/article/{id}", name="article")
@@ -24,8 +25,6 @@ class ArticleController extends Controller
         }
 
         return $this->render('article/index.html.twig', [
-            'categories'      => $this->getCategories(),
-            'controller_name' => 'ArticleController',
             'article'         => $article
         ]);
     }

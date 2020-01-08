@@ -3,11 +3,12 @@
 namespace App\Controller;
 
 use App\Repository\ArticleCategorieRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 
 
-class HomeController extends Controller
+class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
@@ -15,8 +16,6 @@ class HomeController extends Controller
     public function index()
     {
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-            'categories'      => $this->getCategories()
         ]);
     }
 

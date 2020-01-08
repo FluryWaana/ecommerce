@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="row">
-        {% for categorie in categories %}
+        {% for categorie in categories.getCategories %}
             <div class="col-12">
                 {% if categorie.categorie | length > 0 %}
                     <div class="card mb-3">

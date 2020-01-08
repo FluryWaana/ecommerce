@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Form\PanierAddArticleType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PanierController extends Controller
+class PanierController extends AbstractController
 {
     /**
      * @Route("/panier", name="panier")
@@ -17,8 +18,6 @@ class PanierController extends Controller
     public function index()
     {
         return $this->render('panier/index.html.twig', [
-            'controller_name' => 'PanierController',
-            'categories' => $this->getCategories()
         ]);
     }
 
