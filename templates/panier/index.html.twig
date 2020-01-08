@@ -19,6 +19,11 @@
             </thead>
             <tbody>
             {% set total = 0 %}
+
+            {% if app.session.get('panier') | length == 0 %}
+                <td colspan="6">Le panier est vide...</td>
+            {% endif %}
+
             {% for article in app.session.get('panier') %}
                 {% set total = total + (article.quantite * article.article.ArticlePrixHt) %}
                 <tr>

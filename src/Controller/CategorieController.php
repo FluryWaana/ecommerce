@@ -60,15 +60,6 @@ class CategorieController extends Controller
         $articles = $repo_art->getArticlesPaginate( $categorie, $num_page, $nb_article_max );
 
         /**
-         * Si la page demandé contient 0 article l'utilisateur
-         * est redirigé à la page 1 par défaut
-         */
-        if( $articles->getIterator()->count() === 0 )
-        {
-            return $this->redirectToRoute('categorie_front_index');
-        }
-
-        /**
          * Variable utile pour la pagination sur TWIG.
          * Calcul le nombre de page total en fonction du nombre d'article à afficher
          * Ceil permet d'arrondir au nombre au dessus
