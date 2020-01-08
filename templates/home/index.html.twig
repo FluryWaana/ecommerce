@@ -3,5 +3,38 @@
 {% block title %}Entreprise{% endblock %}
 
 {% block body %}
-Hello
+    <div class="row">
+        {% for categorie in categories.getCategories %}
+            <div class="col-12 p-0">
+                {% if categorie.categorie | length > 0 %}
+                    <div class="card mb-3">
+                        <h1 class="card-header">{{ categorie.articleCategorieNom | capitalize }}</h1>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for cat in categorie.categorie %}
+                                    <div class="col-sm-12 col-md-4 text-center d-flex flex-column justify-content-between mb-4">
+                                        <div class="card h-100">
+                                            <div class="card-body text-center my-auto">
+                                                <img class="img-fluid rounded" style="width: 200px"
+                                                     src="{{ asset( cat.imageUri.imageUri ) }}"
+                                                     alt="Image catégorie {{ cat.articleCategorieNom }}"/>
+                                            </div>
+                                            <h2 class="card-footer m-0">
+                                                <a href="{{ path('categorie', { 'id': cat.id }) }}">
+                                                    {{ cat.articleCategorieNom | capitalize }}
+                                                </a>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <img class="img-fluid rounded" style="width: 200px" src="{{ asset( categorie.imageUri.imageUri ) }}"
+                         alt="Image catégorie {{ categorie.articleCategorieNom }}"/>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

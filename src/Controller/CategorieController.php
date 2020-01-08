@@ -4,26 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CategorieController extends Controller
+class CategorieController extends AbstractController
 {
-    /**
-     * @Route("/categorie", name="categorie_index")
-     * @return Response
-     */
-    public function index() {
-        $repo = $this->getDoctrine()->getRepository(ArticleCategorie::class);
-
-        return $this->render('categorie/index.html.twig', [
-            'categories' => $repo->findAll()
-        ]);
-    }
-
-    //------------------------------------------------------------------------
-
     /**
      * @Route("/categorie/{id}", name="categorie")
      * @param Request $request
@@ -60,15 +47,6 @@ class CategorieController extends Controller
         $articles = $repo_art->getArticlesPaginate( $categorie, $num_page, $nb_article_max );
 
         /**
-         * Si la page demandé contient 0 article l'utilisateur
-         * est redirigé à la page 1 par défaut
-         */
-        if( $articles->getIterator()->count() === 0 )
-        {
-            return $this->redirectToRoute('categorie', ['id' => $categorie->getId()]);
-        }
-
-        /**
          * Variable utile pour la pagination sur TWIG.
          * Calcul le nombre de page total en fonction du nombre d'article à afficher
          * Ceil permet d'arrondir au nombre au dessus
@@ -77,7 +55,6 @@ class CategorieController extends Controller
 
         return $this->render('categorie/show.html.twig', [
             'categorie'  => $categorie,
-            'categories' => $this->getCategories(),
             'articles'   => $articles,
             'page_max'   => $nb_page_max,
             'num_page'   => $num_page

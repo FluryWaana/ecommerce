@@ -118,14 +118,22 @@ main {
 
 @media (min-width: 768px) {
     main.container {
-        padding-top: 3rem!important;
+        padding-top: 1rem!important;
     }
 }
 
 @media (max-width: 767px) {
     main.container {
         padding: 0;
+    }
 
+    main > div.row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .item-cart > span.mobile, .item-user > span.mobile {
+        display:none;
     }
 }
 
@@ -236,3 +244,9 @@ div.liste-article>article:nth-of-type(odd) {
     font-size: 1.6em;
 }
 
+/**
+ * Panier
+ */
+.panier td {
+    vertical-align: middle;
+}

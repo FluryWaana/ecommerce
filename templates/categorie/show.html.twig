@@ -3,124 +3,167 @@
 {% block title %}{{ categorie.ArticleCategorieNom | capitalize }}{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-md-3 col-lg-3 bg-primary rounded-left">
-            <h2 class="text-center text-white">Filtrer les articles</h2>
-        </div>
-        <div class="col-md-9 col-lg-9 bg-white liste-article rounded-right">
-            <h1>{{ categorie.ArticleCategorieNom | capitalize }}</h1>
-
-            <nav>
-                <ul class="pagination justify-content-end">
-                    <li class="page-item {{ num_page == 1 ? 'disabled' }}">
-                        <a class="page-link" href="{{ path('categorie', {id: categorie.Id, page: num_page - 1}) }}"> <i class="fas fa-angle-left"></i> </a>
+    <div class="row mb-3 overflow-hidden">
+        <nav aria-label="breadcrumb" class="col-12 p-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('home') }}">Accueil</a></li>
+                {% if categorie.articleCategorie is not null %}
+                    <li class="breadcrumb-item"><a
+                                href="{{ path('categorie', {id: categorie.articleCategorie.articleCategorieId}) }}">{{ categorie.articleCategorie.articleCategorieNom | capitalize }}</a>
                     </li>
-                    {% for i in 1..page_max %}
-                        <li class="page-item {{ num_page == i ? 'active' }}">
-                            <a class="page-link" href="{{ path('categorie', {id: categorie.Id, page: i}) }}">{{ i }}</a>
-                        </li>
-                    {% endfor %}
-                    <li class="page-item {{ num_page == page_max ? 'disabled' }}">
-                        <a class="page-link" href="{{ path('categorie', {id: categorie.Id, page: num_page + 1}) }}"> <i class="fas fa-angle-right"></i> </a>
-                    </li>
-                </ul>
-            </nav>
+                {% endif %}
+                <li class="breadcrumb-item active"
+                    aria-current="page">{{ categorie.ArticleCategorieNom | capitalize }}</li>
+            </ol>
+        </nav>
 
-            {% for article in articles %}
-                <article class="row">
-                    <div class="col-md-4 col-lg-4">
-                        <a href="#">
-                            <img class="img-fluid" src="{{ asset('images/alimentation.png') }}" alt="Article {{ article.ArticleReference }}" />
-                        </a>
-                    </div>
-                    <div class="col-md-8 col-lg-8">
-                        <div class="row">
-                            <div class="col-8">
-                                <a href="#">
-                                    {{ article.ArticleReference }}
-                                </a><br/>
-                                <p class="text-justify">
-                                    {{ article.ArticleDescriptionCourte }}
-                                </p>
-                            </div>
-                            <div class="col-4">
-                                <div class="price mt-2"> {{ article.ArticlePrixHt }} €</div>
-
-                                <form class="mt-lg-3 mt-md-3 form-add-art">
-                                    <div class="form-group">
-                                        <div class="d-flex justify-content-center">
-                                            <button class="btn-rem-qt-article">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                            <input type="hidden" name="article_reference" value="{{ article.ArticleReference }}" />
-                                            <input type="number" name="article_quantite" min="1" value="1" class="input-qt-article" />
-                                            <button class="btn-add-qt-article">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
+        <!-- Début Catégorie Parent -->
+        {% if categorie.articleCategorie is null %}
+                <div class="col-12 p-0">
+                    <div class="card">
+                        <h1 class="card-header">{{ categorie.articleCategorieNom | capitalize }}</h1>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for cat in categorie.categorie %}
+                                    <div class="col-sm-12 col-md-4 text-center d-flex flex-column justify-content-between mb-4">
+                                        <div class="card h-100">
+                                            <div class="card-body text-center my-auto">
+                                                <img class="img-fluid rounded"
+                                                     src="{{ asset( cat.imageUri.imageUri ) }}"
+                                                     alt="Image catégorie {{ cat.articleCategorieNom }}"/>
+                                            </div>
+                                            <h2 class="card-footer m-0">
+                                                <a href="{{ path('categorie', { 'id': cat.id }) }}">
+                                                    {{ cat.articleCategorieNom | capitalize }}
+                                                </a>
+                                            </h2>
                                         </div>
-
                                     </div>
-                                    <div class="form-group text-right">
-                                        <button class="btn btn-primary btn-add-cart">
-                                            <i class="fas fa-cart-plus"></i>
-                                        </button>
-                                    </div>
-                                </form>
-
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
-                </article>
-            {% endfor %}
+                </div>
+        {% endif %}
+        <!-- Fin Catégorie Parent -->
 
-            <nav class="mt-3">
-                <ul class="pagination justify-content-end">
-                    <li class="page-item {{ num_page == 1 ? 'disabled' }}">
-                        <a class="page-link" href="{{ path('categorie', {id: categorie.Id, page: num_page - 1}) }}"> <i class="fas fa-angle-left"></i> </a>
-                    </li>
-                    {% for i in 1..page_max %}
-                        <li class="page-item {{ num_page == i ? 'active' }}">
-                            <a class="page-link" href="{{ path('categorie', {id: categorie.Id, page: i}) }}">{{ i }}</a>
-                        </li>
-                    {% endfor %}
-                    <li class="page-item {{ num_page == page_max ? 'disabled' }}">
-                        <a class="page-link" href="{{ path('categorie', {id: categorie.Id, page: num_page + 1}) }}"> <i class="fas fa-angle-right"></i> </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <!-- Début Catégorie avec parent -->
+        {% if categorie.articleCategorie is not null %}
+            <div class="col-md-3 col-lg-3 bg-primary rounded-left">
+                <h2 class="text-center text-white">Filtrer les articles</h2>
+            </div>
+            <div class="col-md-9 col-lg-9 bg-white liste-article rounded-right">
+
+                {% if articles | length == 0 and categorie.articleCategorie is not null %}
+                    Aucun article dans cette catégorie
+                {% endif %}
+
+                {% for article in articles %}
+                    <article class="row">
+                        <div class="col-sm-12 col-md-4 col-lg-4">
+                            <a href="{{ path('article', { id: article.ArticleReference }) }}">
+                                <img class="img-fluid" src="{{ asset('images/alimentation.png') }}"
+                                     alt="Article {{ article.ArticleReference }}"/>
+                            </a>
+                        </div>
+                        <div class="col-sm-12 col-md-8 col-lg-8">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-8">
+                                    <a href="{{ path('article', { id: article.ArticleReference }) }}">
+                                        {{ article.ArticleReference }}
+                                    </a><br/>
+                                    <p class="text-justify">
+                                        {{ article.ArticleDescriptionCourte }}
+                                    </p>
+                                </div>
+                                <div class="col-4">
+                                    <div class="price mt-2"> {{ article.ArticlePrixHt }} €</div>
+
+                                    <form class="mt-lg-3 mt-md-3 form-add-art">
+                                        <div class="form-group">
+                                            <div class="d-flex justify-content-center">
+                                                <button class="btn-rem-qt-article">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input type="hidden" name="article_reference"
+                                                       value="{{ article.ArticleReference }}"/>
+                                                <input type="number" name="article_quantite" min="1" value="1"
+                                                       class="input-qt-article"/>
+                                                <button class="btn-add-qt-article">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group text-right">
+                                            <button class="btn btn-primary btn-add-cart">
+                                                <i class="fas fa-cart-plus"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+
+                {% if articles | length > 0 %}
+                    <nav class="mt-3">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item {{ num_page == 1 ? 'disabled' }}">
+                                <a class="page-link"
+                                   href="{{ path('categorie', {id: categorie.Id, page: num_page - 1}) }}">
+                                    <i class="fas fa-angle-left"></i> </a>
+                            </li>
+                            {% for i in 1..page_max %}
+                                <li class="page-item {{ num_page == i ? 'active' }}">
+                                    <a class="page-link"
+                                       href="{{ path('categorie', {id: categorie.Id, page: i}) }}">{{ i }}</a>
+                                </li>
+                            {% endfor %}
+                            <li class="page-item {{ num_page == page_max ? 'disabled' }}">
+                                <a class="page-link"
+                                   href="{{ path('categorie', {id: categorie.Id, page: num_page + 1}) }}">
+                                    <i class="fas fa-angle-right"></i> </a>
+                            </li>
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
+        {% endif %}
+        <!-- Fin Catégorie avec parent -->
     </div>
-    {% endblock %}
+{% endblock %}
 
     {% block javascripts %}
         <script>
-            $(function(){
-                $( '.btn-rem-qt-article' ).on('click', evt => {
+            $(function () {
+                $('.btn-rem-qt-article').on('click', evt => {
                     evt.preventDefault();
 
-                    let num = parseInt( $( $( evt.currentTarget ).siblings()[1] ).val() );
+                    let num = parseInt($($(evt.currentTarget).siblings()[1]).val());
 
-                    if( num > 1 ) {
+                    if (num > 1) {
                         num -= 1;
-                        $( $( evt.currentTarget ).siblings()[1] ).val( num );
+                        $($(evt.currentTarget).siblings()[1]).val(num);
                     }
                 });
 
-                $( '.btn-add-qt-article' ).on('click', evt => {
+                $('.btn-add-qt-article').on('click', evt => {
                     evt.preventDefault();
 
-                    let num = parseInt( $( $( evt.currentTarget ).siblings()[2] ).val() ) + 1;
-                    $( $( evt.currentTarget ).siblings()[2] ).val( num );
+                    let num = parseInt($($(evt.currentTarget).siblings()[2]).val()) + 1;
+                    $($(evt.currentTarget).siblings()[2]).val(num);
                 });
 
-                $( '.form-add-art' ).on('click', '.btn-add-cart', evt => {
+                $('.form-add-art').on('click', '.btn-add-cart', evt => {
                     evt.preventDefault();
 
-                    var formData = new FormData( evt.currentTarget.form );
-
+                    let formData = new FormData(evt.currentTarget.form);
 
                     $.ajax({
-                        dataType : "json",
+                        dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         url: '{{ path('panier_add_article') }}',
                         type: 'POST',
@@ -128,10 +171,10 @@
                             article_reference: formData.get('article_reference'),
                             article_quantite: formData.get('article_quantite')
                         }),
-                        success: function() {
+                        success: function () {
                             window.location = "../panier";
                         },
-                        error: function() {
+                        error: function () {
 
                         }
                     });
