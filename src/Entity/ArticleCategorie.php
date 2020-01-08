@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleCategorieRepository")
@@ -45,10 +46,16 @@ class ArticleCategorie
      */
     private $categorie;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ArticleCategorieCaracteristique", mappedBy="categories")
+     */
+    private $caracteristiques;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->categorie = new ArrayCollection();
+        $this->caracteristiques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,6 +161,34 @@ class ArticleCategorie
             if ($categorie->getArticleCategorie() === $this) {
                 $categorie->setArticleCategorie(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleCategorieCaracteristique[]
+     */
+    public function getCaracteristiques(): Collection
+    {
+        return $this->caracteristiques;
+    }
+
+    public function addCaracteristique(ArticleCategorieCaracteristique $caracteristique): self
+    {
+        if (!$this->caracteristiques->contains($caracteristique)) {
+            $this->caracteristiques[] = $caracteristique;
+            $caracteristique->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaracteristique(ArticleCategorieCaracteristique $caracteristique): self
+    {
+        if ($this->caracteristiques->contains($caracteristique)) {
+            $this->caracteristiques->removeElement($caracteristique);
+            $caracteristique->removeCategory($this);
         }
 
         return $this;

@@ -83,6 +83,11 @@ class Article
      */
     private $fournisseurs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleCaracteristique", mappedBy="article")
+     */
+    private $caracteristiques;
+
     public function __construct()
     {
         $this->image_uri = new ArrayCollection();
@@ -90,6 +95,7 @@ class Article
         $this->hasPromotions = new ArrayCollection();
         $this->commandeAvoirArticles = new ArrayCollection();
         $this->fournisseurs = new ArrayCollection();
+        $this->caracteristiques = new ArrayCollection();
     }
 
     public function getArticle_reference()
@@ -335,6 +341,37 @@ class Article
         if ($this->fournisseurs->contains($fournisseur)) {
             $this->fournisseurs->removeElement($fournisseur);
             $fournisseur->removeArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleCaracteristique[]
+     */
+    public function getCaracteristiques(): Collection
+    {
+        return $this->caracteristiques;
+    }
+
+    public function addCaracteristique(ArticleCaracteristique $caracteristique): self
+    {
+        if (!$this->caracteristiques->contains($caracteristique)) {
+            $this->caracteristiques[] = $caracteristique;
+            $caracteristique->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaracteristique(ArticleCaracteristique $caracteristique): self
+    {
+        if ($this->caracteristiques->contains($caracteristique)) {
+            $this->caracteristiques->removeElement($caracteristique);
+            // set the owning side to null (unless already changed)
+            if ($caracteristique->getArticle() === $this) {
+                $caracteristique->setArticle(null);
+            }
         }
 
         return $this;

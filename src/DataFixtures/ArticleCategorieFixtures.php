@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
+use App\Entity\ArticleCategorieCaracteristique;
 use App\Entity\Image;
 use App\Entity\User;
 use DateTime;
@@ -70,49 +71,49 @@ class ArticleCategorieFixtures extends Fixture
                     ],
                     'boîtier' => [
                         'caracteristique' => [
-                            'marque', 'modèle', 'puissance', 'certification 80 PLUS'
+                            'marque', 'modèle', 'puissance'
                         ],
                         'image_url' => 'images/boitier-ordinateur.jpg',
                         'enfants' => []
                     ],
                     'carte graphique' => [
                         'caracteristique' => [
-                            'marque', 'modèle', 'puissance', 'certification 80 PLUS'
+                            'marque', 'modèle', 'puissance'
                         ],
                         'image_url' => 'images/carte-graphique.jpg',
                         'enfants' => []
                     ],
                     'carte mère' => [
                         'caracteristique' => [
-                            'marque', 'modèle', 'puissance', 'certification 80 PLUS'
+                            'marque', 'modèle', 'puissance'
                         ],
                         'image_url' => 'images/carte-mere.jpg',
                         'enfants' => []
                     ],
                     'carte son' => [
                         'caracteristique' => [
-                            'marque', 'modèle', 'puissance', 'certification 80 PLUS'
+                            'marque', 'modèle', 'puissance'
                         ],
                         'image_url' => 'images/carte-son.jpg',
                         'enfants' => []
                     ],
                     'disque dur & ssd' => [
                         'caracteristique' => [
-                            'marque', 'modèle', 'puissance', 'certification 80 PLUS'
+                            'marque', 'modèle', 'puissance'
                         ],
                         'image_url' => 'images/ssd.jpg',
                         'enfants' => []
                     ],
                     'mémoire' => [
                         'caracteristique' => [
-                            'marque', 'modèle', 'puissance', 'certification 80 PLUS'
+                            'marque', 'modèle', 'puissance'
                         ],
                         'image_url' => 'images/ram.jpg',
                         'enfants' => []
                     ],
                     'processeur' => [
                         'caracteristique' => [
-                            'marque', 'modèle', 'puissance', 'certification 80 PLUS'
+                            'marque', 'modèle', 'puissance'
                         ],
                         'image_url' => 'images/processeur.png',
                         'enfants' => []
@@ -123,14 +124,23 @@ class ArticleCategorieFixtures extends Fixture
                 'image_url' => 'images/ordinateur.jpg',
                 'enfants' => [
                     'ordinateur gaming' => [
+                        'caracteristique' => [
+                            'marque', 'modèle', 'puissance'
+                        ],
                         'image_url' => 'images/ordinateur gaming.jpg',
                         'enfants' => []
                     ],
                     'ordinateur bureautique' => [
+                        'caracteristique' => [
+                            'marque', 'modèle', 'puissance'
+                        ],
                         'image_url' => 'images/ordinateur_bureautique.jpeg',
                         'enfants' => []
                     ],
                     'ordinateur portable' => [
+                        'caracteristique' => [
+                            'marque', 'modèle', 'puissance', 'pouces'
+                        ],
                         'image_url' => 'images/ordinateur_portable.jpg',
                         'enfants' => []
                     ]
@@ -202,8 +212,9 @@ class ArticleCategorieFixtures extends Fixture
      * @param array $categories
      * @param ArticleCategorie|null $parent
      */
-    private function creerCategories( ObjectManager $manager, array $categories, ArticleCategorie $parent = null )
+    private function creerCategories( ObjectManager $manager, array $categories, ArticleCategorie $parent = null, array $caracteristiquesUsed = []  )
     {
+
         $repo_image = $manager->getRepository(Image::class);
 
         // Parcours la liste des catégories "principales"
@@ -213,11 +224,40 @@ class ArticleCategorieFixtures extends Fixture
             $categorie->setArticleCategorieNom($key);
             $categorie->setImageUri( $repo_image->find( $value['image_url'] ) );
             (!is_null($parent)) ? $categorie->setArticleCategorie($parent) : null;
+
             $manager->persist($categorie);
+
+            if (array_key_exists('caracteristique',$value)){
+                $caracteristiques = $value['caracteristique'];
+
+                foreach ($caracteristiques as $value2){
+                    $alreadyUsed = false;
+                    $caracteristique = null;
+
+                    foreach ($caracteristiquesUsed as $value3){
+                        if ($value3->getArticleCategorieCaracteristiqueNom() == $value2){
+                            $alreadyUsed = true;
+                            $caracteristique = $value3;
+                        }
+                    }
+                    if (!$alreadyUsed){
+                        $caracteristique = new ArticleCategorieCaracteristique();
+                        $caracteristique->setArticleCategorieCaracteristiqueNom($value2);
+                        $caracteristique->addCategory($categorie);
+                        $manager->persist($caracteristique);
+                        $caracteristiquesUsed[] = $caracteristique;
+                    }
+
+                    $caracteristique->addCategory($categorie);
+                    $manager->persist($caracteristique);
+                    $categorie->addCaracteristique($caracteristique);
+                    $manager->persist($categorie);
+                }
+            }
 
             if ( count( $value['enfants'] ) > 0 )
             {
-                $this->creerCategories( $manager, $value['enfants'], $categorie );
+                $this->creerCategories( $manager, $value['enfants'], $categorie , $caracteristiquesUsed);
             }
             else
             {
@@ -244,7 +284,7 @@ class ArticleCategorieFixtures extends Fixture
             $article = new Article();
             $article->setArticleReference( $faker->isbn13 );
             $article->setCategorie( $categorie );
-            $article->setArticleDesignation( $faker->sentence(6, true ) );
+            $article->setArticleDesignation( $faker->sentence(3, true ) );
             $article->setArticlePrixHt( $faker->randomNumber(2));
             $article->setArticleDescriptionCourte( $faker->sentence(20, true ) );
             $article->setArticleDescriptionLongue( $faker->paragraphs(5, true ) );
