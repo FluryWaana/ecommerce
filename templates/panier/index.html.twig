@@ -46,6 +46,9 @@
             </tbody>
         </table>
         <div class="text-right">
+            <a class="btn btn-danger" href="{{ path('panier_reset') }}">
+                Vider
+            </a>
             <button class="btn btn-primary {% if app.session.get('panier') | length == 0 %} disabled {% endif %}">Commander</button>
         </div>
     </div>

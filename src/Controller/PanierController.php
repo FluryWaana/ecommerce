@@ -165,4 +165,18 @@ class PanierController extends Controller
             'message' => 'L\'article a bien été supprimé du panier'
         ], 200);
     }
+
+
+    /**
+     * @Route("/panier/article/reset", name="panier_reset", methods={"get"})
+     * @param Request $request
+     * @return Response
+     */
+    public function resetPanier(Request $request)
+    {
+        $session = $request->getSession();
+        $session->remove('panier');
+        $session->remove('panier_count');
+        return $this->redirectToRoute('panier');
+    }
 }

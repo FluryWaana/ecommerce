@@ -12,15 +12,19 @@
                         <div class="card-body">
                             <div class="row">
                                 {% for cat in categorie.categorie %}
-                                    <div class="col-4 text-center">
-                                        <img class="img-fluid rounded mb-2" style="width: 200px"
-                                             src="{{ asset( cat.imageUri.imageUri ) }}"
-                                             alt="Image catégorie {{ cat.articleCategorieNom }}"/>
-                                        <h2 class="">
-                                            <a href="{{ path('categorie', { 'id': cat.id }) }}">
-                                                {{ cat.articleCategorieNom | capitalize }}
-                                            </a>
-                                        </h2>
+                                    <div class="col-4 text-center d-flex flex-column justify-content-between mb-4">
+                                        <div class="card h-100">
+                                            <div class="card-body text-center my-auto">
+                                                <img class="img-fluid rounded" style="width: 200px"
+                                                     src="{{ asset( cat.imageUri.imageUri ) }}"
+                                                     alt="Image catégorie {{ cat.articleCategorieNom }}"/>
+                                            </div>
+                                            <h2 class="card-footer m-0">
+                                                <a href="{{ path('categorie', { 'id': cat.id }) }}">
+                                                    {{ cat.articleCategorieNom | capitalize }}
+                                                </a>
+                                            </h2>
+                                        </div>
                                     </div>
                                 {% endfor %}
                             </div>

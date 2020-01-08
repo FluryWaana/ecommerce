@@ -113,7 +113,7 @@
                                                     Aucune catégorie de disponible
                                                 {% endif %}
                                                 {% for sscategorie in categorie.Categorie %}
-                                                    <a class="dropdown-item" href="{{ path('categorie', { 'id': sscategorie.id }) }}">{{ sscategorie.ArticleCategorieNom | capitalize }}</a>
+                                                    <a class="dropdown-item " href="{{ path('categorie', { 'id': sscategorie.id }) }}">{{ sscategorie.ArticleCategorieNom | capitalize }}</a>
                                                 {% endfor %}
                                             </div>
                                         </li>
