@@ -236,3 +236,9 @@ div.liste-article>article:nth-of-type(odd) {
     font-size: 1.6em;
 }
 
+/**
+ * Panier
+ */
+.panier td {
+    vertical-align: middle;
+}

@@ -73,7 +73,13 @@
                         <!-- Début panier -->
                         <a class="col-3 col-sm-3 col-md-2 col-lg-1 order-4 order-lg-3 my-auto item-cart" href="{{ path('panier') }}">
                             <i class="fas fa-shopping-cart fa-lg"></i>
-                            <span class="badge badge-success">0</span>
+                            <span class="badge badge-success">
+                                {% if app.session.get('panier_count') is null %}
+                                    0
+                                {% else %}
+                                    {{ app.session.get('panier_count') }}
+                                {% endif %}
+                            </span>
                             <span>Panier</span>
                         </a>
                         <!-- Fin du panier -->
