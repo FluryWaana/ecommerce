@@ -5,51 +5,92 @@
 {% block body %}
 <div class="card">
     <h1 class="card-header">Panier</h1>
-    <div class="card-body">
-        <table class="table table-striped panier">
-            <thead>
-            <tr>
-                <th></th>
-                <th>Référence</th>
-                <th class="text-center">Quantité</th>
-                <th class="text-center">Prix</th>
-                <th class="text-center">Sous-total</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% set total = 0 %}
-
-            {% if app.session.get('panier') | length == 0 %}
-                <td colspan="6">Le panier est vide...</td>
-            {% endif %}
-
-            {% for article in app.session.get('panier') %}
-                {% set total = total + (article.quantite * article.article.ArticlePrixHt) %}
+    <div class="row pl-3 pr-3">
+        <div class="card-body col-md-9">
+            <table class="table table-striped panier">
+                <thead>
                 <tr>
-                    <td><img class="img-fluid" src="{{ asset('images/alimentation.png') }}" style="width: 100px" ></td>
-                    <td><a href="#">{{ article.article.ArticleReference }}</td>
-                    <td class="text-center">{{ article.quantite }}</td>
-                    <td class="text-center">{{ article.article.ArticlePrixHt }}€</td>
-                    <td class="text-center">{{ article.quantite * article.article.ArticlePrixHt }}€</td>
-                    <td class="text-center">
-                        <a href="#" class="text-danger btn-article-delete" data-id="{{ article.article.ArticleReference }}">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </td>
+                    <th></th>
+                    <th>Référence</th>
+                    <th class="text-center">Quantité</th>
+                    <th class="text-center">Prix</th>
+                    <th class="text-center">Sous-total</th>
+                    <th></th>
                 </tr>
-            {% endfor %}
-            <tr>
-                <td colspan="4" class="text-right">TOTAL</td>
-                <td class="text-center">{{ total }}€</td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="text-right">
-            <a class="btn btn-danger" href="{{ path('panier_reset') }}">
-                Vider
-            </a>
-            <button class="btn btn-primary {% if app.session.get('panier') | length == 0 %} disabled {% endif %}">Commander</button>
+                </thead>
+                <tbody>
+                {% set total = 0 %}
+
+                {% if app.session.get('panier') | length == 0 %}
+                    <td colspan="6">Le panier est vide...</td>
+                {% endif %}
+
+                {% for article in app.session.get('panier') %}
+                    {% set total = total + (article.quantite * article.article.ArticlePrixHt) %}
+                    <tr>
+                        <td>
+                            <img class="img-fluid" src="{{ asset('images/alimentation.png') }}" style="width: 100px" alt="Image article {{ article.article.ArticleReference }}">
+                        </td>
+                        <td>
+                            <a href="{{ path('article', { id: article.article.ArticleReference }) }}">{{ article.article.ArticleReference }}</a>
+                        </td>
+                        <td class="text-center">{{ article.quantite }}</td>
+                        <td class="text-center">{{ article.article.ArticlePrixHt }}€</td>
+                        <td class="text-center">{{ article.quantite * article.article.ArticlePrixHt }}€</td>
+                        <td class="text-center">
+                            <a href="#" class="text-danger btn-article-delete" data-id="{{ article.article.ArticleReference }}">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+                <div class="row border-top pt-2">
+                    <div class="col">
+                        <a href="{{ path('home') }}" class="btn btn-info">Continuer les achats</a>
+                    </div>
+                    <div class="col text-right">
+                        <a class="btn btn-danger" href="{{ path('panier_reset') }}">
+                            Vider
+                        </a>
+                    </div>
+                </div>
+        </div>
+        <div class="col-3 mt-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <input type="text" placeholder="Coupon de réduction" class="form-control mb-2"/>
+                    <button class="btn btn-primary">Valider</button>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Total HT</td>
+                                <td class="text-right">{{ total }}€</td>
+                            </tr>
+                            <tr>
+                                <td>TVA (20%)</td>
+                                <td class="text-right">{{ total * 0.2 }}€</td>
+                            </tr>
+                            <tr>
+                                <td>TOTAL TTC</td>
+                                <td class="text-right"><b>{{ total + ( total * 0.2 ) }}€</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center border-top pt-2">
+                        <img src="{{ asset('images/template/payments.png') }}" alt="Source Paiements" class="img-fluid"/>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <button class="btn btn-primary {% if app.session.get('panier') | length == 0 %} disabled {% endif %}">Commander</button>
+            </div>
         </div>
     </div>
 </div>

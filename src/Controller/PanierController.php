@@ -29,6 +29,7 @@ class PanierController extends Controller
      */
     public function addArticle(Request $request) : Response
     {
+        // Récupère le répository d'Article
         $repo_article = $this->getDoctrine()->getRepository( Article::class );
 
         // Décode le JSON en entrée
@@ -72,7 +73,6 @@ class PanierController extends Controller
                     ]);
 
                     $quantie_article += $data['article_quantite'];
-                    $session->set('panier_count',  $quantie_article);
                 }
                 else
                 {
@@ -94,12 +94,13 @@ class PanierController extends Controller
                             'article'  => $article,
                             'quantite' => $data['article_quantite']
                         ];
-                        $quantie_article += $panier[$key]['quantite'];
+                        $quantie_article += $data['article_quantite'];
                     }
 
                     $session->set('panier', $panier);
-                    $session->set('panier_count',  $quantie_article);
                 }
+
+                $session->set('panier_count',  $quantie_article);
 
                 return $this->json([
                     'status'  => 'success',

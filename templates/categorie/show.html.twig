@@ -35,14 +35,14 @@
             {% for article in articles %}
                 <article class="row">
                     <div class="col-md-4 col-lg-4">
-                        <a href="#">
+                        <a href="{{ path('article', { id: article.ArticleReference }) }}">
                             <img class="img-fluid" src="{{ asset('images/alimentation.png') }}" alt="Article {{ article.ArticleReference }}" />
                         </a>
                     </div>
                     <div class="col-md-8 col-lg-8">
                         <div class="row">
                             <div class="col-8">
-                                <a href="#">
+                                <a href="{{ path('article', { id: article.ArticleReference }) }}">
                                     {{ article.ArticleReference }}
                                 </a><br/>
                                 <p class="text-justify">
@@ -124,8 +124,7 @@
                 $( '.form-add-art' ).on('click', '.btn-add-cart', evt => {
                     evt.preventDefault();
 
-                    var formData = new FormData( evt.currentTarget.form );
-
+                    let formData = new FormData( evt.currentTarget.form );
 
                     $.ajax({
                         dataType : "json",
