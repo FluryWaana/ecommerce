@@ -3,5 +3,34 @@
 {% block title %}Entreprise{% endblock %}
 
 {% block body %}
-Hello
+    <div class="row">
+        {% for categorie in categories %}
+            <div class="col-12">
+                {% if categorie.categorie | length > 0 %}
+                    <div class="card mb-3">
+                        <h1 class="card-header">{{ categorie.articleCategorieNom | capitalize }}</h1>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for cat in categorie.categorie %}
+                                    <div class="col-4 text-center">
+                                        <img class="img-fluid rounded mb-2" style="width: 200px"
+                                             src="{{ asset( cat.imageUri.imageUri ) }}"
+                                             alt="Image catégorie {{ cat.articleCategorieNom }}"/>
+                                        <h2 class="">
+                                            <a href="{{ path('categorie', { 'id': cat.id }) }}">
+                                                {{ cat.articleCategorieNom | capitalize }}
+                                            </a>
+                                        </h2>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <img class="img-fluid rounded" style="width: 200px" src="{{ asset( categorie.imageUri.imageUri ) }}"
+                         alt="Image catégorie {{ categorie.articleCategorieNom }}"/>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
