@@ -250,3 +250,10 @@ div.liste-article>article:nth-of-type(odd) {
 .panier td {
     vertical-align: middle;
 }
+
+/**
+ * Espace utilisateur
+ */
+li.list-group-item.active > a {
+    color: #FFF!important;
+}

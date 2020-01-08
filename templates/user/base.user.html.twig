@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4 col-lg-4">
+            <ul class="list-group">
+                <li class="list-group-item {{ app.request.get('_route') == 'user_account' ? 'active' }}">
+                    <a href="{{ path('user_account') }}">Mon compte</a>
+                </li>
+                <li class="list-group-item {{ app.request.get('_route') == 'user_commandes' ? 'active' }}">
+                    <a href="{{ path('user_commandes') }}">Mes commandes</a>
+                </li>
+                <li class="list-group-item  {{ app.request.get('_route') == 'user_adresses' ? 'active' }}">
+                    <a href="{{ path('user_adresses') }}">Mes adresses</a>
+                </li>
+                <li class="list-group-item {{ app.request.get('_route') == 'user_password' ? 'active' }}">
+                    <a href="{{ path('user_password') }}">Mot de passe</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ path('app_logout') }}">Déconnexion</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-8 col-lg-8">
+            <div class="card">
+                <h1 class="card-header">{% block titre %}{% endblock %}</h1>
+                <div class="card-body">
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

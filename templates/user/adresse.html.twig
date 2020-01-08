@@ -1,0 +1,14 @@
+{% extends 'user/base.user.html.twig' %}
+
+{% block titre %}Mes adresses <a href="{{ path('user_add_adresse') }}" class="float-right" title="Ajouter une adresse"><i class="fas fa-plus-circle"></i></a>{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% if adresses | length == 0 %}
+        <div class="border text-center p-5">
+            <b>Vous n'avez pas encore d'adresse.</b>
+        </div>
+        {% else %}
+        {% endif %}
+    </div>
+{% endblock %}

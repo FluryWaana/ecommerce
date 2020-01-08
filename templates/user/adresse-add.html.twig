@@ -1,0 +1,9 @@
+{% extends 'user/base.user.html.twig' %}
+
+{% block titre %}Création d'une adresse <a href="{{ path('user_adresses') }}" class="float-right" title="Revenir aux adresses"><i class="fas fa-chevron-circle-left"></i></a>{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {{ form(form) }}
+    </div>
+{% endblock %}

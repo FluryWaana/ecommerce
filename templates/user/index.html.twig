@@ -1,20 +1,36 @@
-{% extends 'base.html.twig' %}
+{% extends 'user/base.user.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block titre %}Mes informations{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/CESI/ecommerce/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/CESI/ecommerce/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {{ form_start(form) }}
+    <div class="form-row">
+        <div class="col-md-12">
+            {{ form_widget(form.user_sexe) }}
+            {{ form_errors(form.user_sexe) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.user_nom) }}
+            {{ form_widget(form.user_nom) }}
+            {{ form_errors(form.user_nom) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.user_prenom) }}
+            {{ form_widget(form.user_prenom) }}
+            {{ form_errors(form.user_prenom) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.user_email) }}
+            {{ form_widget(form.user_email) }}
+            {{ form_errors(form.user_email) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.user_date_naissance) }}
+            {{ form_widget(form.user_date_naissance) }}
+            {{ form_errors(form.user_date_naissance) }}
+        </div>
+    </div>
+    <button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button>
+    {{ form_end(form) }}
 {% endblock %}

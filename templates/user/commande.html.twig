@@ -1,0 +1,46 @@
+{% extends 'user/base.user.html.twig' %}
+
+{% block titre %}Mes commandes{% endblock %}
+
+{% block content %}
+    {% if commandes | length == 0 %}
+        <div class="border text-center p-5">
+            <b>Vous n'avez pas de commande.</b>
+        </div>
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Référence</th>
+                <th class="text-center">Date de commande</th>
+                <th class="text-center">Montant total</th>
+                <th>Statut</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for commande in commandes %}
+                <tr>
+                    <td>{{ commande.id }}</td>
+                    <td class="text-center">{{ commande.commandeDateCreation | date('d-m-yy') }}</td>
+                    <td class="text-center"><b>1000€</b></td>
+                    <td>
+                        {% if commande.commandeDatePaiement is not null and commande.commandeDateExpedition is null %}
+                            En préparation
+                        {% elseif  commande.commandeDatePaiement is not null and commande.commandeDateExpedition is not null %}
+                            Expédiée
+                        {% else %}
+                            En attente de paiement
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="#">
+                            Consulter
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

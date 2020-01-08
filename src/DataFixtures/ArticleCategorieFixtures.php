@@ -11,6 +11,7 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
+use Proxies\__CG__\App\Entity\TypePaiement;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ArticleCategorieFixtures extends Fixture
@@ -200,6 +201,16 @@ class ArticleCategorieFixtures extends Fixture
             $user->setRoles( ['ROLE_ADMIN'] );
             $manager->persist( $user );
         }
+
+        /**
+         * Création des moyens de paiements
+         */
+        $paiment = new TypePaiement();
+        $paiment->setTypePaiementNom('carte bleue');
+        $manager->persist( $paiment );
+        $paiment2 = new TypePaiement();
+        $paiment2->setTypePaiementNom('chèque');
+        $manager->persist( $paiment2 );
 
         $manager->flush();
     }
