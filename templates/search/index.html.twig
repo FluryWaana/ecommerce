@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche{% endblock %}
+
+{% block body %}
+    <div class="row mb-3 overflow-hidden">
+        <div class="col-md-12 col-lg-12 bg-white liste-article rounded-right">
+            {% if listArticles | length == 0 %}
+                Cette recherche n'a trouvé aucun article. Veuillez choisir d'autre mots clés.
+            {% endif %}
+
+            {% for article in listArticles %}
+                <article class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <a href="{{ path('article', { id: article.ArticleReference }) }}">
+                            <img class="img-fluid" src="{{ asset('images/alimentation.png') }}"
+                                 alt="Article {{ article.ArticleReference }}"/>
+                        </a>
+                    </div>
+                    <div class="col-sm-12 col-md-8 col-lg-8">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-8">
+                                <a href="{{ path('article', { id: article.ArticleReference }) }}">
+                                    {{ article.ArticleReference }}
+                                </a><br/>
+                                <p class="text-justify">
+                                    {{ article.ArticleDescriptionCourte }}
+                                </p>
+                            </div>
+                            <div class="col-4">
+                                <div class="price mt-2"> {{ article.ArticlePrixHt }} €</div>
+
+                                <form class="mt-lg-3 mt-md-3 form-add-art">
+                                    <div class="form-group">
+                                        <div class="d-flex justify-content-center">
+                                            <button class="btn-rem-qt-article">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="hidden" name="article_reference"
+                                                   value="{{ article.ArticleReference }}"/>
+                                            <input type="number" name="article_quantite" min="1" value="1"
+                                                   class="input-qt-article"/>
+                                            <button class="btn-add-qt-article">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group text-right">
+                                        <button class="btn btn-primary btn-add-cart">
+                                            <i class="fas fa-cart-plus"></i>
+                                        </button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+
+            {% if listArticles | length > 0 %}
+                <nav class="mt-3">
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item {{ num_page == 1 ? 'disabled' }}">
+                            <a class="page-link"
+                               href="{{ path('search', {page: num_page - 1 } | merge(app.request.query.all)) }}">
+                                <i class="fas fa-angle-left"></i> </a>
+                        </li>
+                        {% for i in 1..page_max %}
+                            <li class="page-item {{ num_page == i ? 'active' }}">
+                                <a class="page-link"
+                                   href="{{ path('search', {page: i } | merge(app.request.query.all)) }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+                        <li class="page-item {{ num_page == page_max ? 'disabled' }}">
+                            <a class="page-link"
+                               href="{{ path('search', {page: num_page + 1 } | merge(app.request.query.all)) }}">
+                                <i class="fas fa-angle-right"></i> </a>
+                        </li>
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(function () {
+            $('.btn-rem-qt-article').on('click', evt => {
+                evt.preventDefault();
+
+            let num = parseInt($($(evt.currentTarget).siblings()[1]).val());
+
+            if (num > 1) {
+                num -= 1;
+                $($(evt.currentTarget).siblings()[1]).val(num);
+            }
+        });
+
+            $('.btn-add-qt-article').on('click', evt => {
+                evt.preventDefault();
+
+            let num = parseInt($($(evt.currentTarget).siblings()[2]).val()) + 1;
+            $($(evt.currentTarget).siblings()[2]).val(num);
+        });
+
+            $('.form-add-art').on('click', '.btn-add-cart', evt => {
+                evt.preventDefault();
+
+            let formData = new FormData(evt.currentTarget.form);
+
+            $.ajax({
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                url: '{{ path('panier_add_article') }}',
+                type: 'POST',
+                data: JSON.stringify({
+                    article_reference: formData.get('article_reference'),
+                    article_quantite: formData.get('article_quantite')
+                }),
+                success: function () {
+                    window.location = "../panier";
+                },
+                error: function () {
+
+                }
+            });
+        });
+        });
+    </script>
+{% endblock %}

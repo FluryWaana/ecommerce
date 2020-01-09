@@ -6,12 +6,12 @@ use App\Entity\Article;
 use App\Entity\ArticleCategorie;
 use App\Entity\ArticleCategorieCaracteristique;
 use App\Entity\Image;
+use App\Entity\TypePaiement;
 use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
-use Proxies\__CG__\App\Entity\TypePaiement;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ArticleCategorieFixtures extends Fixture
@@ -20,6 +20,8 @@ class ArticleCategorieFixtures extends Fixture
      * @var UserPasswordEncoderInterface
      */
     private $passwordEncoder;
+
+    private $caracteristiquesUsed = [];
 
     //------------------------------------------------------------------------
 
@@ -223,7 +225,7 @@ class ArticleCategorieFixtures extends Fixture
      * @param array $categories
      * @param ArticleCategorie|null $parent
      */
-    private function creerCategories( ObjectManager $manager, array $categories, ArticleCategorie $parent = null, array $caracteristiquesUsed = []  )
+    private function creerCategories( ObjectManager $manager, array $categories, ArticleCategorie $parent = null )
     {
 
         $repo_image = $manager->getRepository(Image::class);
@@ -245,7 +247,7 @@ class ArticleCategorieFixtures extends Fixture
                     $alreadyUsed = false;
                     $caracteristique = null;
 
-                    foreach ($caracteristiquesUsed as $value3){
+                    foreach ($this->caracteristiquesUsed as $value3){
                         if ($value3->getArticleCategorieCaracteristiqueNom() == $value2){
                             $alreadyUsed = true;
                             $caracteristique = $value3;
@@ -256,7 +258,7 @@ class ArticleCategorieFixtures extends Fixture
                         $caracteristique->setArticleCategorieCaracteristiqueNom($value2);
                         $caracteristique->addCategory($categorie);
                         $manager->persist($caracteristique);
-                        $caracteristiquesUsed[] = $caracteristique;
+                        $this->caracteristiquesUsed[] = $caracteristique;
                     }
 
                     $caracteristique->addCategory($categorie);
@@ -268,7 +270,7 @@ class ArticleCategorieFixtures extends Fixture
 
             if ( count( $value['enfants'] ) > 0 )
             {
-                $this->creerCategories( $manager, $value['enfants'], $categorie , $caracteristiquesUsed);
+                $this->creerCategories( $manager, $value['enfants'], $categorie );
             }
             else
             {

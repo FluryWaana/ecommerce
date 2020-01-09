@@ -85,9 +85,9 @@
                         <!-- Fin du panier -->
 
                         <!-- Début du formulaire de recherche -->
-                        <form class="col-12 col-sm-12 col-md-12 col-lg-8 order-5 order-lg-1 my-auto form-search" method="get" action="" >
+                        <form class="col-12 col-sm-12 col-md-12 col-lg-8 order-5 order-lg-1 my-auto form-search" method="get" action="{{ path('search') }}" >
                             <div class="input-group">
-                                <input type="text" class="form-control input-lg" placeholder="Chercher un article..." />
+                                <input type="text" name="meta" class="form-control input-lg" placeholder="Chercher un article..." />
                                 <button class="input-group-prepend btn-search" type="submit">
                                     <i class="fas fa-search"></i>
                                 </button>
