@@ -64,18 +64,18 @@
                     <ul class="pagination justify-content-end">
                         <li class="page-item {{ num_page == 1 ? 'disabled' }}">
                             <a class="page-link"
-                               href="{{ path('search', {page: num_page - 1 } | merge(app.request.query.all)) }}">
+                               href="{{ path('search', app.request.query.all | merge({'page': num_page - 1 })) }}">
                                 <i class="fas fa-angle-left"></i> </a>
                         </li>
                         {% for i in 1..page_max %}
                             <li class="page-item {{ num_page == i ? 'active' }}">
                                 <a class="page-link"
-                                   href="{{ path('search', {page: i } | merge(app.request.query.all)) }}">{{ i }}</a>
+                                   href="{{ path('search', app.request.query.all | merge( {'page': i } )) }}">{{ i }}</a>
                             </li>
                         {% endfor %}
                         <li class="page-item {{ num_page == page_max ? 'disabled' }}">
                             <a class="page-link"
-                               href="{{ path('search', {page: num_page + 1 } | merge(app.request.query.all)) }}">
+                               href="{{ path('search', app.request.query.all | merge({'page': num_page + 1 })) }}">
                                 <i class="fas fa-angle-right"></i> </a>
                         </li>
                     </ul>

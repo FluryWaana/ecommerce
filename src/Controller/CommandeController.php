@@ -36,5 +36,5 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    
+
 }
