@@ -9,6 +9,7 @@
 namespace App\Controller\admin;
 
 use App\Controller\Controller;
+use App\Entity\Commande;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,8 +22,22 @@ class AdminController extends AbstractController
      */
     public function index()
     {
+        $repo_commande  = $this->getDoctrine()->getRepository( Commande::class );
+        $commandes      = $repo_commande->findAll();
+        $total          = 0;
+
+        // Parcours les commandes
+        foreach ( $commandes as $commande )
+        {
+            // Parcours les lignes d'une commande
+            foreach( $commande->getCommandeAvoirArticles() as $ligne_commande )
+            {
+                $total += $ligne_commande->getArticle()->getArticlePrixHt() * $ligne_commande->getCommandeAvoirArticleQuantite();
+            }
+        }
+
         return $this->render('admin/home/index.html.twig', [
-            'controller_name' => 'AdminController'
+            'chiffre_affaire_annuelle' => $total
         ]);
     }
 }

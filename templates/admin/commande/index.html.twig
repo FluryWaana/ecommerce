@@ -1,0 +1,48 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des commandes{% endblock %}
+
+{% block body %}
+    <div class="container p-0">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <h1 class="col">Liste des commandes</h1>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Référence</th>
+                        <th>Client</th>
+                        <th>Montant</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for commande in commandes %}
+                        <tr>
+                            <td>{{ commande.id }}</td>
+                            <td>{{ commande.user.userNom | upper }} {{ commande.user.userPrenom | capitalize }}</td>
+                            <td>{{ commande.id }}</td>
+                            <td>
+                                <a class="btn btn-primary" href="#">
+                                    <i class="fas fa-eye"></i>
+                                    Voir
+                                </a>
+
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
