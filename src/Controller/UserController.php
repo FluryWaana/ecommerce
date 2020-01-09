@@ -81,16 +81,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/compte/commandes", name="user_commandes")
-     */
-    public function indexCommandes(Request $request) : Response
-    {
-        return $this->render('user/commande.html.twig', [
-            'commandes' => $this->getUser()->getCommandes()
-        ]);
-    }
-
-    /**
      * @Route("/compte/adresses", name="user_adresses")
      */
     public function indexAdresses(Request $request) : Response
