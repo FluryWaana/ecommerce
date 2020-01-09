@@ -1,0 +1,57 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Caracteristiques Liste{% endblock %}
+
+{% block body %}
+<div class="container p-0">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h1 class="col">Liste des caractéristiques</h1>
+                <div class="col-2 text-right my-auto">
+                    <a href="{{ path('caracteristique_new') }}" class="text-decoration-none" style="font-size: 1.5em;" title="Créer un fournisseur">
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
+                    <a href="{{ path('fournisseur_index') }}" style="font-size: 1.5em;" title="Revenir à la liste des fournisseur">
+                        <i class="fas fa-arrow-circle-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for article_categorie_caracteristique in article_categorie_caracteristiques %}
+                    <tr>
+                        <td>{{ article_categorie_caracteristique.articleCategorieCaracteristiqueId }}</td>
+                        <td>{{ article_categorie_caracteristique.articleCategorieCaracteristiqueNom }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('caracteristique_show', {'id': article_categorie_caracteristique.articleCategorieCaracteristiqueId}) }}">
+                                <i class="fas fa-eye"></i>
+                                Voir
+                            </a>
+                            <a class="btn btn-primary" href="{{ path('caracteristique_edit', {'id': article_categorie_caracteristique.articleCategorieCaracteristiqueId}) }}">
+                                <i class="fas fa-edit"></i>
+                                Modifier
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
