@@ -31,6 +31,14 @@
                             <img src="{{ asset( categorie.ImageUri.ImageUri ) }}" class="img-fluid cat-img-prev"/>
                         </td>
                     </tr>
+                    <tr>
+                        <th>Caractéristiques</th>
+                        <td>
+                            {% for caracteristique in categorie.Caracteristiques %}
+                            {{ caracteristique.articleCategorieCaracteristiqueNom }} <br>
+                            {% endfor %}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
 

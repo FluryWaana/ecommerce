@@ -1,0 +1,23 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modification Caracteristique{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <h1 class="col">Modification d'une caractéristique</h1>
+                    <div class="col-2 text-right my-auto">
+                        <a href="{{ path('caracteristique_index') }}" style="font-size: 1.5em;"><i class="fas fa-arrow-circle-left"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                {{ include('admin/caracteristique/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                {{ include('admin/caracteristique/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -34,7 +34,7 @@ class ArticleCategorieCaracteristique
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArticleCaracteristique", mappedBy="article_categorie_caracteristique")
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleCaracteristique", mappedBy="caracteristique")
      */
     private $articleCaracteristiques;
 
@@ -42,6 +42,11 @@ class ArticleCategorieCaracteristique
     {
         $this->categories = new ArrayCollection();
         $this->articleCaracteristiques = new ArrayCollection();
+    }
+
+    public function getArticleCategorieCaracteristiqueId(): ?int
+    {
+        return $this->article_categorie_caracteristique_id;
     }
 
     public function getId(): ?int

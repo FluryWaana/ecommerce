@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\ArticleCategorie;
+use App\Entity\ArticleCategorieCaracteristique;
 use App\Entity\Image;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -41,6 +42,14 @@ class ArticleCategorieType extends AbstractType
                 'label'        => 'Catégorie parent',
                 'required'     => false,
                 'placeholder'  => 'Aucune catégorie parent'
+            ])
+            ->add('caracteristiques', EntityType::class, [
+                'class'        => ArticleCategorieCaracteristique::class,
+                'choice_label' => 'article_categorie_caracteristique_nom',
+                'label'        => 'Choix des caractéristiques',
+                'required'     => false,
+                'placeholder'  => 'Aucune catégorie parent',
+                'multiple'     => true
             ])
         ;
     }

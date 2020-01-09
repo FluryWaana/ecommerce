@@ -1,0 +1,38 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Voir Caracteristique{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h1 class="col">Consultation de la caractéristique : {{ article_categorie_caracteristique.articleCategorieCaracteristiqueNom }}</h1>
+                <div class="col-2 text-right my-auto">
+                    <a href="{{ path('caracteristique_index') }}" style="font-size: 1.5em;"><i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ article_categorie_caracteristique.articleCategorieCaracteristiqueId }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ article_categorie_caracteristique.articleCategorieCaracteristiqueNom }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex">
+                <a class="btn btn-primary mr-3" href="{{ path('caracteristique_edit', {'id': article_categorie_caracteristique.articleCategorieCaracteristiqueId}) }}">Modifier</a>
+
+                {{ include('admin/caracteristique/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

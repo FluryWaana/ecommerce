@@ -28,7 +28,7 @@ final class Version20200108085852 extends AbstractMigration
         $this->addSql('CREATE TABLE article_avoir_meta (article_reference VARCHAR(25) NOT NULL, article_meta_id INT NOT NULL, INDEX IDX_7F35E83E74961937 (article_reference), INDEX IDX_7F35E83ED42EE24E (article_meta_id), PRIMARY KEY(article_reference, article_meta_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE article_avoir_promotion (article_reference VARCHAR(25) NOT NULL, article_promotion_id INT NOT NULL, avoir_promotion_debut DATE NOT NULL, avoir_promotion_fin DATE NOT NULL, INDEX IDX_884353FB74961937 (article_reference), INDEX IDX_884353FBC0D18605 (article_promotion_id), PRIMARY KEY(article_reference, article_promotion_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE article_caracteristique (article_caracteristique_id INT AUTO_INCREMENT NOT NULL, article_reference VARCHAR(25) NOT NULL, article_categorie_caracteristique_id INT NOT NULL, article_caracteristique_valeur VARCHAR(255) NOT NULL, INDEX IDX_328A8E1574961937 (article_reference), INDEX IDX_328A8E152CD38585 (article_categorie_caracteristique_id), PRIMARY KEY(article_caracteristique_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE article_categorie_caracteristique (article_categorie_caracteristique_id INT AUTO_INCREMENT NOT NULL, article_categorie_caracteristique_nom VARCHAR(255) NOT NULL, PRIMARY KEY(article_categorie_caracteristique_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE caracteristique (article_categorie_caracteristique_id INT AUTO_INCREMENT NOT NULL, article_categorie_caracteristique_nom VARCHAR(255) NOT NULL, PRIMARY KEY(article_categorie_caracteristique_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE categorie_avoir_nom_caracteristique (article_categorie_caracteristique_id INT NOT NULL, article_categorie_id INT NOT NULL, INDEX IDX_EBC113EB2CD38585 (article_categorie_caracteristique_id), INDEX IDX_EBC113EB6FB990BC (article_categorie_id), PRIMARY KEY(article_categorie_caracteristique_id, article_categorie_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE article_meta (article_meta_id INT AUTO_INCREMENT NOT NULL, article_meta_nom VARCHAR(60) NOT NULL, PRIMARY KEY(article_meta_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE article_promotion (article_promotion_id INT AUTO_INCREMENT NOT NULL, article_promotion_pourcentage INT NOT NULL, PRIMARY KEY(article_promotion_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -49,8 +49,8 @@ final class Version20200108085852 extends AbstractMigration
         $this->addSql('ALTER TABLE article_avoir_promotion ADD CONSTRAINT FK_884353FB74961937 FOREIGN KEY (article_reference) REFERENCES article (article_reference)');
         $this->addSql('ALTER TABLE article_avoir_promotion ADD CONSTRAINT FK_884353FBC0D18605 FOREIGN KEY (article_promotion_id) REFERENCES article_promotion (article_promotion_id)');
         $this->addSql('ALTER TABLE article_caracteristique ADD CONSTRAINT FK_328A8E1574961937 FOREIGN KEY (article_reference) REFERENCES article (article_reference)');
-        $this->addSql('ALTER TABLE article_caracteristique ADD CONSTRAINT FK_328A8E152CD38585 FOREIGN KEY (article_categorie_caracteristique_id) REFERENCES article_categorie_caracteristique (article_categorie_caracteristique_id)');
-        $this->addSql('ALTER TABLE categorie_avoir_nom_caracteristique ADD CONSTRAINT FK_EBC113EB2CD38585 FOREIGN KEY (article_categorie_caracteristique_id) REFERENCES article_categorie_caracteristique (article_categorie_caracteristique_id)');
+        $this->addSql('ALTER TABLE article_caracteristique ADD CONSTRAINT FK_328A8E152CD38585 FOREIGN KEY (article_categorie_caracteristique_id) REFERENCES caracteristique (article_categorie_caracteristique_id)');
+        $this->addSql('ALTER TABLE categorie_avoir_nom_caracteristique ADD CONSTRAINT FK_EBC113EB2CD38585 FOREIGN KEY (article_categorie_caracteristique_id) REFERENCES caracteristique (article_categorie_caracteristique_id)');
         $this->addSql('ALTER TABLE categorie_avoir_nom_caracteristique ADD CONSTRAINT FK_EBC113EB6FB990BC FOREIGN KEY (article_categorie_id) REFERENCES article_categorie (article_categorie_id)');
         $this->addSql('ALTER TABLE commande ADD CONSTRAINT FK_6EEAA67DA76ED395 FOREIGN KEY (user_id) REFERENCES user (user_id)');
         $this->addSql('ALTER TABLE commande ADD CONSTRAINT FK_6EEAA67D615593E9 FOREIGN KEY (type_paiement_id) REFERENCES type_paiement (type_paiement_id)');
@@ -96,7 +96,7 @@ final class Version20200108085852 extends AbstractMigration
         $this->addSql('DROP TABLE article_avoir_meta');
         $this->addSql('DROP TABLE article_avoir_promotion');
         $this->addSql('DROP TABLE article_caracteristique');
-        $this->addSql('DROP TABLE article_categorie_caracteristique');
+        $this->addSql('DROP TABLE caracteristique');
         $this->addSql('DROP TABLE categorie_avoir_nom_caracteristique');
         $this->addSql('DROP TABLE article_meta');
         $this->addSql('DROP TABLE article_promotion');
