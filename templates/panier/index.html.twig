@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PanierController!{% endblock %}
+{% block title %}Mon panier{% endblock %}
 
 {% block body %}
 <div class="card">
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div class="card mt-3">
-                <button class="btn btn-primary {% if app.session.get('panier') | length == 0 %} disabled {% endif %}">Commander</button>
+                <a href="{{ path('commande') }}" class="btn btn-primary {% if app.session.get('panier') | length == 0 %} disabled {% endif %}">Commander</a>
             </div>
         </div>
     </div>

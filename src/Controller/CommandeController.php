@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Entity\ArticleMeta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,4 +20,21 @@ class CommandeController extends AbstractController
             'commandes' => $this->getUser()->getCommandes()
         ]);
     }
+
+    /**
+     * @Route("/commande/1", name="commande")
+     */
+    public function passerCommande(Request $request) : Response
+    {
+        // Récupération de la session cookie
+        $session  = $request->getSession();
+        $articles = $session->get('panier');
+        dd( $articles );
+
+        return $this->render('commande/index.html.twig', [
+            'articles' => $articles
+        ]);
+    }
+
+    
 }
